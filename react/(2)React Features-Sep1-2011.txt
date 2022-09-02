@@ -1,0 +1,65 @@
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NDk4MjE3Mzk1NDY3/details
+
+
+What is React? How it is different from Angular?
+When to use React and Angular?
+What we can do with React?
+
+Features of React
+1. Virtual DOM
+   a) DOM
+   b) Shadow DOM
+   c) Virtual DOM
+
+What is DOM?
+Document Object Model
+Hierarchy of presenting elements. It is used to create a layout.
+
+markup => bytes => chars => token => node => DOM => layout => render => painting
+
+What is CSSOM?
+CSS Object Model
+Applying styles to HTML elements.
+
+What is Shadow DOM?
+- It define "Component Object Model"
+- Every component in HTML is built with shadow DOM.
+   <input type=date, color, file, email>
+
+What is Virtual DOM?
+- It is a copy of actual DOM in browser memory.
+- It updates and renders result faster.
+
+
+2. React is Asynchronous and Modular
+- Only the library that is required for application will be loaded.
+- Application specific library.
+- Application light weight
+- Faster
+- Async allows to perform any task without blocking other tasks.
+- Implicitly using Ajax.
+
+3. Loosely coupled and extensibile
+- Allows to plugin various 3rd party libraries to handle different interactions.
+- To fill the GAPS
+
+        Formik            - Forms
+        Yup                - Validations
+        Axios                - API Requests
+        Redux            - State Management
+
+4. React can use various frameworks
+        MVC
+        MVVM
+    Framework is required to control the flow of application.
+
+5. It reduces lot of DOM manipulations
+
+        document.createElement()
+        appendChild()
+        innerText, innerHTML
+
+6. Component Based
+        - Reusability
+        - Separation
+        - Extensibility

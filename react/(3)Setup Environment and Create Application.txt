@@ -1,0 +1,152 @@
+Features of React
+Cons. of React
+- Library, only build
+- External framework
+- Lot of GAPS
+- Lot of 3rd Party
+- Virtual DOM uses more memory
+
+Setup Environment for React
+-------------------------------------------
+1. Download and Install "NodeJS" on your PC
+    - We are using NodeJS for Package Manager "NPM"
+            [Yarn, Bower, NPM, NuGet, RubyGems..]
+
+    - Package Manager is used for downloading and installing library
+      required for project.
+
+    https://nodejs.org/en/
+
+   - Check version of NodeJS and NPM from command prompt
+
+    C:\>node -v            16+
+     C:\>npm -v             8+
+
+Note: For React 18+ versions you need
+            Node JS        14+
+            NPM            6+
+            Windows 8+
+       
+2. Download and Install "Visual Studio Code" editor
+
+    https://code.visualstudio.com/Download
+
+3. Open Visual Studio Code Editor and Install following plugins
+    [Extentions]
+
+    - Live Server        [ to run web pages on server]
+    - vscode-icons        [ to provide user friendly icons of files]
+    - IntelliSense for CSS class names in HTML
+
+Summary
+- Install Node JS for NPM
+- Install VS Code for Editor
+- Add Extentions for Web Development
+
+How to use React in existing Web Application?
+----------------------------------------------------------------
+- Inorder to use react in any web page you need following libraries
+        a) React
+        b) React-DOM
+        c) Babel
+- React          : It is the "Core" library
+- React-dom : It is the library to handle Virtual DOM.
+- Babel         : It is a JavaScript compiler
+
+
+1. Create a new Web Application
+
+    - Create a new folder on your PC for application
+
+            D:\shopping-react-app
+
+    - Open the folder in your editor "VS Code"
+
+     - Run the following command in terminal
+
+            >npm  init -y                [ package.json ]
+   
+    - Add following folders into project
+
+            - public        : comprises of static resources [html, images]
+            - src            : comprises of dynamic resource [css, scss, js]
+
+    - Add following files into "public" folder
+            - index.html
+            - home.html
+
+2. Add react to your "home.html" page using CDN links.
+
+    - Go to "reactjs.org"
+    - Go to "docs" tab
+    - Select CDN Links
+    - Copy CDN for development           [.js]
+                         production            [min.js]
+   
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script&gt;
+
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script&gt;
+
+    - Go to "https://babeljs.io/&quot;
+    - Copy CDN for "babel - standalone"
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script&gt;
+
+    react.js
+    react-dom.js
+    babel.js
+
+
+Ex:
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <h2>Shopping Index</h2>
+    <a href="home.html">React Home</a>
+</body>
+</html>
+
+home.html
+
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTI3MDYyNzY3NTg4/details
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script&gt;
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script&gt;
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script&gt;
+
+    <script type="text/babel">
+        //React Upto 17 version
+        /*
+        ReactDOM.render(
+            "Welcome to React JS",
+            document.querySelector("p")
+        )
+        */
+
+        //React 18
+       const root = ReactDOM.createRoot(document.querySelector("p"));
+       root.render("Welcome to React 18.");
+    </script>
+
+</head>
+<body>
+    <h2>React Home</h2>
+    <p></p>
+</body>
+</html>
