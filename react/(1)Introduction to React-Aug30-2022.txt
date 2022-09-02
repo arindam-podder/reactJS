@@ -1,0 +1,51 @@
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTI2OTA3ODkxMjA1/details
+
+
+What is React? How it is different from Angular?
+- React is a JavaScript library for building User Interfaces.
+- Angular is a developers platform. It is also a framework.
+
+What is difference between Library and Framework?
+- Library can build application but can't control application flow.
+- Library depends on lot of events and DOM manipulations.
+
+- Framework can build application and can control application flow.
+
+When to use a library and framework?
+- If your application is built with UI
+  Java, .NET, PHP, Python
+  [MVC - Spring, ASP.NET MVC, Cake PHP, Django]
+  HTML, CSS, Bootstrap - Build UI - JavaScript/jQuery
+  React
+
+- If your application is controlling only API in backend
+- Complete interface and flow need to be controlled in UI
+- Angular
+
+
+Every Application in modern Web uses
+    M V C
+
+    React is a only about    "V" View
+    Angular is good for MVC
+
+Angular and React both are required for developer.
+
+- React Clients
+        Neflix, Amazon, Instagram, Facebook, Nasa etc..
+
+Why React, why not jQuery?
+
+Features of React:
+- React uses Virtual DOM.
+
+What is DOM?
+- Document Object Model
+- It is a hierarchy of elements presented on page.
+
+markup=>bytes=>chars=>token=>node=>DOM=> layout=> render => Paint
+
+What is Shadow DOM?
+- It is document model for every component in HTML.
+
+What is Virtual DOM?
