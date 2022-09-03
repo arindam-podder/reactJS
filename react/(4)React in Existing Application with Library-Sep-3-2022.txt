@@ -1,0 +1,121 @@
+- Use React in existing web application
+        CDN Links
+- Use React in Existing Web Application with library offline
+
+1. Open Terminal in your project
+
+2. Install the following libraries
+
+    >npm install react --save
+    >npm install react-dom --save
+    >npm install @babel/standalone --save
+
+3. Library files are copied into "node_modules"
+
+4. You have to link the file from "umd" module system
+
+home.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/@babel/standalone/babel.js"></script>
+    <script type="text/babel">
+        //React Upto 17 version
+        /*
+        ReactDOM.render(
+            "Welcome to React JS",
+            document.querySelector("p")
+        )
+        */
+
+        //React 18
+       const root = ReactDOM.createRoot(document.querySelector("p"));
+       root.render("Welcome to React 18.");
+    </script>
+
+</head>
+<body>
+    <h2>React Home</h2>
+    <p></p>
+</body>
+</html>
+
+- React is component based.
+- You can design a component and render in virtual DOM.
+-  You can create a component using function
+
+Syntax:
+  function Component()
+  {
+    return(
+           <markup></markup>
+      )
+  }
+
+- You can render the component into root
+
+  root.render(
+        <div>
+             <Component> </Component>
+        </div>
+  )
+
+- Install Bootstrap
+
+    > npm install bootstrap --save
+    > npm install bootstrap-icons --save
+
+Ex: Home.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/@babel/standalone/babel.js"></script>
+    <script type="text/babel">
+         function Header(){
+            return (
+                <h2 className="text-danger">Netflix</h2>
+            )
+         }
+         function Register(){
+            return(
+                <div className="input-group">
+                 <input type="text" placeholder="Your email address" className="form-control" />
+                 <button className="btn btn-danger">Get Started <span className="bi bi-chevron-right"></span> </button>    
+                </div>
+            )
+         }
+         const root = ReactDOM.createRoot(document.getElementById("root"));
+         root.render(
+            <div className="container-fluid bg-dark p-4 text-white">
+                <Header />
+                <hr />
+                <div className="w-50">
+                    <Register />
+                </div>
+                <br />
+                <Register/>
+            </div>
+         )
+    </script>
+
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
