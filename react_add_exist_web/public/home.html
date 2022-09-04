@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <!-- added cdn -> folow the order of js file -->
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+
+
+    <!-- added file from downloaded library  -->
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/@babel/standalone/babel.js"></script>
+
+
+    <script type="text/babel">
+        //React Upto 17 version
+        /*
+        ReactDOM.render(
+            "Welcome to React JS",
+            document.querySelector("p")
+        )
+        */
+
+        //React 18
+        const root = ReactDOM.createRoot(document.querySelector("p"));
+        root.render("Welcome to React 18.");
+
+
+        //component creating 
+        function Netflix(){
+            return (<div> 
+                    <h3>Netflix</h3>
+                    </div>
+            )    
+        }
+
+        function InputButton(){
+            return (<div className="input-group">
+                    <input type="text"  />
+                    <button>continue</button>
+                    </div>
+            )
+        }
+
+        const reactRoot = ReactDOM.createRoot(document.getElementById("react-root"));
+        reactRoot.render(
+            <div>
+            <Netflix />
+            <InputButton />
+             <br />  
+            <InputButton />
+             
+            </div>
+        )
+
+    </script>
+
+</head>
+<body>
+    <h2>React Home</h2>
+    <p></p>
+    <br><br>
+    <div id="react-root"></div>
+
+</body>
+</html>
