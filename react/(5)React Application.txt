@@ -1,0 +1,69 @@
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NDk4Mzc1OTg2Mjc5/details
+
+What is the library required for React?
+- Using React in existing App with CDN
+- Using React in Existing App with Offline Library
+        react
+        react-dom
+        babel
+
+How to create a react application?
+1. Install NodeJS on your PC - For Package Manager NPM
+
+2. Open any location on your PC in command prompt
+
+    E:\>npx  create-react-app   app-name
+
+    E:\>npx  create-react-app   react-shopping
+
+3. Open your react application in "Visual Studio Code"
+
+
+File / Folder                Description
+---------------------------------------------------------------------------------------------
+node_modules            It comprises of all library files installed using NPM
+
+public                        It comprises of static resources.
+                            .html, images, text, pdf, audio, video etc..
+
+src                            It comprises of dynamic resources.
+                            .css,  .scss, .js, .ts etc..
+
+.gitignore                    It configures the files and folder that are ignored
+                            while publishing your application on to GIT Pages.
+
+package.json                It comprises of project meta data.
+                            - app name
+                            - app version            
+                            - app dependencies etc..
+
+package.lock.json        It comprises of detail information about every
+                            library installed in project.
+
+README.md                It is help document for project.
+
+
+4. Start react application from terminal
+
+      E:\react-shopping> npm start
+
+      http://localhost:3000
+
+
+FAQ: What is npm start?
+Ans:  It is a batch program.
+         A batch program comprises of set of commands that are executed
+       in sequential order.
+
+
+Explain the Execution Flow of React App
+------------------------------------------------------
+1. React application UI is designed with Components
+2. Every React application by default have "App" component "App.js".
+3. Index.js uses the App component and renders into "index.html".
+
+
+FAQ: We are not linking "index.js" to "index.html" then how it can access the code of index.js?
+Ans: By using "WebPack"
+
+                            Components in React
