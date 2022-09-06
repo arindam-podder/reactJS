@@ -1,0 +1,189 @@
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTQ1ODAyNDEyMjE2/details
+
+
+Create a new React App
+
+> npx create-react-app    appname
+
+app.js => index.js => index.html    WebPack
+
+
+                            React Components
+- Components are considered as Building-Blocks for React Application.
+- Application is built by using Components.
+- Technically component comprises of
+
+        a) Presentation
+        b) Logic
+        c) Styles
+
+- Presentation is by using HTML.
+- Logic is defined by using JSX. (or) Logic is defined by using TypeScript.
+- Styles are defined by using CSS.
+
+
+Creating Component
+----------------------------
+- Technically component is a "function" or "class".
+
+Issues with OOP
+    * Can't directly interact with Hardware Services
+    * Will not support low level features
+    * Slow in interaction
+    * Use more memory
+    * Complex in configurations
+
+- Class allows extensibility
+- Function is hard to extend.
+
+Function Component
+----------------------------
+- Every component must return markup.
+- If you are creating a function component, then it must return markup.
+
+Syntax:
+        function  Name()
+        {
+            //logic
+            return ( <markup> )
+        }
+
+- Component is configured in a separate JavaScript file.
+- Every JavaScript file resembles a "Module".
+- Every function in a module need to "export".
+
+Syntax:
+        export  function Name()
+        {
+        }
+
+- A module can contain one default export.
+
+Ex:
+        export default function Name()
+        {
+        }
+
+- You have to import the members and use in any location.
+
+Syntax:
+        import  { Name }  from  'moduleName';     // not default export
+        import  Name from 'moduleName';        //  default export
+        import Name, { others } from 'moduleName';
+
+- Component is rendered by using "Element Selector".
+
+        <Name> </Name>
+
+
+Ex:
+1. Add a new folder into "src" by name  "components"
+
+2. Add a new JavaScript file
+   
+            "LoginComponent.js"
+
+   export function LoginComponent()
+   {
+          return (<h2> User Login </h2>);
+   }
+
+3. Go to "index.js"
+
+4. Import Login Component
+
+                                   Index.js
+    import  { LoginComponent  }  from  './component/LoginComponent';
+
+    root.render(
+         <LoginComponent />
+    )
+
+
+Component JSX Rules:
+1. You can't render multiple lines of markup.
+       
+            render(
+                    <h2>User Login</h2>                // invalid
+                    <p> User Login Page </p>
+                    )        
+
+2. You have to use a container
+            render (
+                    <div>
+                         <h2> </h2>
+                        <p> </p>
+                    </div>
+                     )
+
+                (or)
+
+             render(
+                    <>
+                       <h2></h2>
+                        <p> </p>
+                    </>
+                    )
+       
+Note :   <> container will not allow any attributes.
+               
+            import React from  "react";
+
+            render(
+                <React.Fragment>
+                  <h2> </h2>            
+                  <p> </p>
+                </React.Fragment>
+                )
+   
+3. React JSX will not allow void type tags.              
+            <img>                  invalid
+            <img> </img>
+            <img />
+            <input type="text"> </input>
+            <input type="text" />
+
+4. You can't bind any value to attribute, JSX allows only property binding.
+
+            <div class="">            attribute
+            <img>
+           
+            document.querySelector("div").className
+            document.querySelector("img").src = ""
+
+Ex:
+LoginComponent.css
+
+.form-control {
+    border:2px solid red;
+}
+form {
+    margin-left: 20px;
+    border:2px solid black;
+    padding: 20px;
+    width: 200px;
+}
+
+LoginComponent.js
+
+//module - LoginComponent
+
+import React from "react";
+import './LoginComponent.css';
+
+export function LoginComponent(){
+    return (
+     <React.Fragment>
+         <form>
+         <h2>User Login</h2>
+         <dl>
+            <dt>User Name</dt>
+            <dd><input type="text" className="form-control"/></dd>
+            <dt>Password</dt>
+            <dd><input type="password" className="form-control" /></dd>
+         </dl>
+         <button>Login</button>
+         </form>
+     </React.Fragment>
+    );
+}
