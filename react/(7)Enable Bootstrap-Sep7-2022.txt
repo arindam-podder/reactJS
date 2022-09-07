@@ -1,0 +1,49 @@
+
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTQ2MDczNDQ3NTg3/details
+	netflix example  -> https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTQ2MDcyMTE0ODQ1/details
+
+
+
+React Components
+- Function
+- JSX
+- Bootstrap
+- Material UI
+
+                     Enable Bootstrap CSS for React
+
+1. Install Bootstrap into your project
+
+    > npm install bootstrap --save
+    > npm install bootstrap-icons --save
+
+
+2. Go to Index.js and import bootstrap css
+
+    import   "../node_modules/bootstrap/dist/css/bootstrap.css";
+    import   "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+3. Add a new component
+
+        "LoginComponent.js"
+
+import React from "react";
+
+export function LoginComponent(){
+    return (
+     <React.Fragment>
+        <div className="container-fluid d-flex justify-content-center mt-3">
+        <form className="border border-2 border-primary p-3 rounded rounded-3">
+         <h2> <span className="bi bi-person-fill"></span> User Login</h2>
+         <dl>
+            <dt>User Name</dt>
+            <dd><input type="text" className="form-control"/></dd>
+            <dt>Password</dt>
+            <dd><input type="password" className="form-control"/></dd>
+         </dl>
+          <button className="btn btn-primary w-100">Login</button>
+         </form>
+        </div>
+     </React.Fragment>
+    );
+}
