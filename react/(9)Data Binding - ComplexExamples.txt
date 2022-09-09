@@ -1,0 +1,196 @@
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTI3NDMyMjczNjQ0/details
+
+- Create a Component
+- Data Binding in Component
+        - Primitive Types
+        - Non Primitive Types
+            object
+            array
+            JSON
+Note: When you are repeating any element in react using "map()" every element must have a unique key.
+               
+Syntax:
+            categories.map(category=> <li key={}>  {category} </li>)
+
+
+Ex: Embedded Objects
+
+DataBinding.js
+
+
+export function DataBinding(){
+    const product = {
+      Name : "Nike Casuals",
+      Price: 4500.34,
+      Stock: true,
+      Rating: {Rate:4.3, Count:4600},
+      ShippedTo: ["Delhi","Hyd"]
+    }    
+    return(
+        <div className="container-fluid">
+            <h2>Product Details</h2>
+            <dl>
+               <dt>Name</dt>
+               <dd>{product.Name}</dd>
+               <dt>Price</dt>
+               <dd>{product.Price}</dd>
+               <dt>Stock</dt>
+               <dd>{(product.Stock==true)?"Available":"Out of Stock"}</dd>
+               <dt>Rating</dt>
+               <dd><span className="bi bi-star-fill text-success"></span> {product.Rating.Rate} [{product.Rating.Count}]</dd>
+               <dt>Shipped To</dt>
+               <dd>
+                  <ul>
+                     {
+                        product.ShippedTo.map(city=>
+                           <li key={city}>{city}</li>
+                           )
+                     }
+                  </ul>
+               </dd>
+            </dl>
+        </div>
+    )
+}
+
+Ex: Nested Iterations
+
+Databinding.js
+
+
+export function DataBinding(){
+    const menu = [
+       {Category: "Electronics", Products:["TV","Mobile"]},
+       {Category: "Footwear", Products:["Casuals", "Boot"]}
+    ];
+    return(
+        <div className="container-fluid">
+           <h2>Menu</h2>
+           <ol>
+             {
+               menu.map(item=>
+                    <li key={item.Category}>{item.Category}
+                        <ul>
+                           {
+                              item.Products.map(product=>
+                                  <li key={product}>{product}</li>
+                                 )
+                           }
+                        </ul>
+                    </li>
+                  )
+             }
+           </ol>
+           <h2>Select Product</h2>
+           <select>
+              {
+                menu.map(item=>
+                   <optgroup label={item.Category} key={item.Category}>
+                      {
+                        item.Products.map(product=>
+                            <option key={product} >{product}</option>
+                           )
+                      }
+                   </optgroup>
+                  )
+              }
+           </select>
+        </div>
+    )
+}
+
+Ex: JSON Array - Table
+
+DataBinding.js
+
+
+export function DataBinding(){
+    const products = [
+       {Name: "Sony Speaker", Price:5600.32, Photo:"images/speaker.jpg"},
+       {Name: "Nike Casuals", Price:7000.42, Photo:"images/shoe.jpg"}
+    ];
+    return(
+        <div className="container-fluid">
+            <h2>Products Table</h2>
+            <table className="table table-hover">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Price</th>
+                     <th>Photo</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {
+                     products.map(product=>
+                        <tr>
+                           <td>{product.Name}</td>
+                           <td>{product.Price}</td>
+                           <td>
+                              <img src={product.Photo} width="100" height="100" />
+                           </td>
+                        </tr>
+                        )
+                  }
+               </tbody>
+            </table>
+        </div>
+    )
+}
+
+Ex: Cards
+
+Databinding.js
+
+
+export function DataBinding(){
+    const products = [
+       {Name: "Sony Speaker", Price:5600.32, Photo:"images/speaker.jpg", Rating:{Rate:4.2, Count:3000}},
+       {Name: "Nike Casuals", Price:7000.42, Photo:"images/shoe.jpg", Rating:{Rate:3.6, Count:6020}},
+       {Name: "Winter Jacket", Price:2400.44, Photo:"images/jacket.jpg", Rating:{Rate:4.6, Count: 446}}
+    ];
+    return(
+        <div className="container-fluid">
+           <h2>Cards</h2>
+           <div className="d-flex flex-warp">
+              {
+                 products.map(product=>
+                   <div className="card p-2 m-2 w-25">
+                      <img src={product.Photo} className="card-img-top" height="150" />
+                      <div className="card-header">
+                         <h3>{product.Name}</h3>
+                      </div>
+                      <div className="card-body">
+                        <dl>
+                           <dt>Price</dt>
+                           <dd>{product.Price}</dd>
+                           <dt>Rating</dt>
+                           <dd>
+                              <span className="bi bi-star-fill text-success"></span> {product.Rating.Rate} [{product.Rating.Count}]
+                           </dd>
+                        </dl>
+                      </div>
+                      <div className="card-footer">
+                        <button className="btn btn-danger w-100">
+                           <span className="bi bi-cart4"></span> Add to Cart
+                        </button>
+                      </div>
+                   </div>
+                  )
+              }
+           </div>
+        </div>
+    )
+}
+
+                   React will support only "One Way Binding"
+- Data Binding is classified into 2 types
+    a) One Way Binding
+    b) Two Way Binding
+
+- React Supports only one way binding.
+- It can access data and bind to UI.
+- It can't identify the changes in UI and update back to source.
+- React have to depend on lot of Event Binding techniques
+
+                                Two Way Binding
