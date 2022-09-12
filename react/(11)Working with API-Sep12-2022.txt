@@ -1,0 +1,163 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NDk4NzgxMTI5ODgz/details
+
+
+
+Handling Data from API's
+
+- API uses distributed computing architecture.
+- Distributed computing allows two applications running on two different machines to share information. (or)
+  Two applications running in two different process of same machine to share information.
+- There are various distributed computing technologies
+
+1. CORBA [Common Object Request Broken Architecture] - C++, Java, 14..
+2. DCOM [Distributed Component Object Model] - Visual Basic
+3. RMI [Remote Method Invocation] - Java
+4. EJB [Enterprise Java Beans] - Java [J2EE]
+5. Web Service - All technologies
+6. Remoting   - .NET
+
+- API uses Web Service
+- Web Service have 3 specifications
+
+    a) SOAP [Service Oriented Architecture Protocol]
+    b) REST [Representational State Transfer]
+    c) JSON [JavaScript Object Notation]
+
+SOAP
+- Service consumer [client] makes XML request
+- Service provider [server] sends XML response
+
+REST
+- Service consumer makes a simple query request
+- Service provider will send XML response [optionally JSON].
+
+JSON
+- Service consumer makes JSON request
+- Service proviced will JSON response.
+
+Ex:
+                                    Nasa API
+- https://api.nasa.gov/
+- JavaScript provides "fetch()" promise to communicate with API
+
+Syntax:
+        fetch("url")
+        .then(function(response){
+              return  response.json();
+            })
+        .then(function(data){
+            ...use JSON data...
+            })
+
+- React can use "JavaScript  - fetch()" promise to communicate with API.
+- React requires fetching of data on component initialization.
+- React function component can handle connections with API and fetch data from API on initialization of component.
+- React function component initialization is defined by using the hook
+        "useEffect"
+
+Syntax:
+         useEffect(function(){
+                ...action on initialization...
+            }, [ dependencies ])
+
+- Initialization is often known as "Mounting".
+
+FAQ: How to define component mount and unmount using function?
+Ans : By using "useEffect".
+
+FAQ: How to define component mount and unmount using class?
+Ans:  By using  "componentWillMount(), componentDidMount()"
+
+
+Ex: NasaAPI.js
+
+import { useState, useEffect } from "react";
+
+export function NasaAPI()
+{
+    const [marsObject, setMarsObject] = useState([]);
+
+    useEffect(()=>{
+        fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY&quot;)
+        .then(response => response.json())
+        .then(data=> {
+            setMarsObject(data.photos);
+        })
+    },[]);
+
+    return(
+        <div className="container-fluid">
+            <h2>Mars Rover Photos</h2>
+            <table className="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Photo</th>
+                        <th>Camera</th>
+                        <th>Rover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        marsObject.map(item=>
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>
+                                    <a href={item.img_src} target="_blank">
+                                    <img src={item.img_src} width="100" height="100" />
+                                    </a>
+                                </td>
+                                <td>
+                                    {item.camera.full_name}
+                                </td>
+                                <td>
+                                    {item.rover.name}
+                                </td>
+                            </tr>
+                            )
+                    }
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+Ex: Cards
+
+import { useState, useEffect } from "react";
+
+export function NasaAPI()
+{
+    const [marsObject, setMarsObject] = useState([]);
+
+    useEffect(()=>{
+        fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY&quot;)
+        .then(response => response.json())
+        .then(data=> {
+            setMarsObject(data.photos);
+        })
+    },[]);
+
+    return(
+        <div className="container-fluid">
+            <h2>Mars Rover Photos</h2>
+            <div className="d-flex flex-wrap">
+                {
+                    marsObject.map(item=>
+                        <div className="card m-2 p-2 w-25">
+                            <img src={item.img_src} className="card-img-top" height="160" />
+                            <div className="card-body">
+                                <dl>
+                                    <dt>Camera Name</dt>
+                                    <dd>{item.camera.full_name}</dd>
+                                    <dt>Rover Name</dt>
+                                    <dd>{item.rover.name}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        )
+                }
+            </div>
+        </div>
+    )
+}
