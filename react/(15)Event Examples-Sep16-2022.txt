@@ -1,0 +1,282 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTQ4MTQ1OTE1MTk3/details
+
+
+
+Events
+- What is Event?
+- What are SyntheticEvents?
+- Design Pattern - Observer
+- Delegate - Function Pointer
+- Event Args [event]
+    event
+    event.target
+
+FAQ: Some HTM elements are Generic type, they have default
+        functionality. How to prevent default functionality?
+
+Ans:  Submit Button, Reset Button, DataList -  Generic type
+        By using event method "preventDefault()", you can by-pass the
+        default functionality.
+
+Ex:
+
+export function EventBinding()
+{
+    function handleSubmit(event){
+        event.preventDefault();
+        alert("Data Submitted to Server");
+    }
+    return(
+        <div className="container m-3">
+            <form onSubmit={handleSubmit}>
+                User Name : <input type="text" name="UserName" />
+                            <button>Register</button>
+            </form>
+        </div>
+    )
+}
+
+1. Mouse Events
+    onMouseOver
+    onMouseOut
+    onMouseDown
+    onMouseUp
+    onMouseMove
+
+Ex:
+
+export function EventBinding()
+{
+    function stopAnimation(e){
+        e.target.stop();
+    }
+    function startAnimation(e){
+        e.target.start();
+    }
+    return(
+        <div className="container-fluid m-3">
+           <marquee onMouseOver={stopAnimation} onMouseOut={startAnimation} srcollAmount="15">
+              <img  src="images/shoe.jpg" width="100" height="100" />
+              <img  src="images/shoe1.jpg" width="100" height="100" />
+              <img  src="images/jacket.jpg" width="100" height="100" />
+           </marquee>
+        </div>
+    )
+}
+
+2. Keyboard Events
+    onKeyUp            ]  performs actions when key is released
+    onKeyDown        ]  they can't access keyCodes
+    onKeyPress        ]  performs action when you finish a key. It can get code.
+
+    keyCode            ]
+    charCode            ]
+    which                ]
+    shiftKey
+    ctrlKey
+    altKey
+
+Ex:
+import { useState } from "react"
+
+export function EventBinding()
+{
+    const [users] = useState([{UserName:"john"},{UserName:"john11"}]);
+    const [userError, setUserError] = useState("");
+    const [capsWarning, setCapsWarning] = useState({display:'none'});
+    function VerifyUser(e){
+       for(var user of users){
+         if(user.UserName==e.target.value){
+            setUserError("User Name Taken - Try Another");
+            break;
+         } else {
+            setUserError("User Name Available");
+         }
+       }
+    }
+    function VerifyPassword(e){
+        if((e.keyCode>=65 && e.keyCode<=90)||(e.which>=65 && e.which<=90)) {
+            setCapsWarning({display:'block'});
+        } else {
+            setCapsWarning({display:'none'});
+        }
+    }
+    return(
+        <div className="container-fluid m-3">
+           <h2>Register User</h2>
+           <dl>
+            <dt>User Name</dt>
+            <dd><input onKeyUp={VerifyUser} type="text"/></dd>
+            <dd>{userError}</dd>
+            <dt>Password</dt>
+            <dd><input onKeyPress={VerifyPassword} type="password"/></dd>
+            <dd style={capsWarning} className="text-warning"><span className="bi bi-exclamation-triangle-fill"></span> Caps ON</dd>
+           </dl>
+           <button>Register</button>
+        </div>
+    )
+}
+
+3. Button Events
+    onClick                    on mouse click
+    onDblClick                on double click
+    onContextMenu            on right click
+
+
+4. Clipboard Events
+    onCut
+    onCopy
+    onPaste
+Ex:
+import { useState } from "react"
+
+export function EventBinding()
+{
+    const [users] = useState([{UserName:"john"},{UserName:"john11"}]);
+    const [userError, setUserError] = useState("");
+    const [capsWarning, setCapsWarning] = useState({display:'none'});
+    function VerifyUser(e){
+       for(var user of users){
+         if(user.UserName==e.target.value){
+            setUserError("User Name Taken - Try Another");
+            break;
+         } else {
+            setUserError("User Name Available");
+         }
+       }
+    }
+    function VerifyPassword(e){
+        if((e.keyCode>=65 && e.keyCode<=90)||(e.which>=65 && e.which<=90)) {
+            setCapsWarning({display:'block'});
+        } else {
+            setCapsWarning({display:'none'});
+        }
+    }
+    function handleCopy(){
+        setUserError("Copied to Clipboard");
+    }
+    function handleCut(){
+        setUserError("Removed and copied to clipboard");
+    }
+    function handlePaste(){
+        setUserError("");
+    }
+    return(
+        <div className="container-fluid m-3">
+           <h2>Register User</h2>
+           <dl>
+            <dt>User Name</dt>
+            <dd><input onKeyUp={VerifyUser} onPaste={handlePaste} onCut={handleCut} onCopy={handleCopy} type="text"/></dd>
+            <dd>{userError}</dd>
+            <dt>Password</dt>
+            <dd><input onKeyPress={VerifyPassword} type="password"/></dd>
+            <dd style={capsWarning} className="text-warning"><span className="bi bi-exclamation-triangle-fill"></span> Caps ON</dd>
+           </dl>
+           <button>Register</button>
+        </div>
+    )
+}
+
+5. Element State Events
+    onChange
+    onBlur
+    onFocus
+    onSelectStart
+
+Task: EMI Calculator
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>EMI Calculator</title>
+    <script type="text/javascript">
+        function AmountChanged(){
+            document.getElementById("txtAmount").value = document.getElementById("rangeAmount").value;
+        }
+        function YearChanged(){
+            document.getElementById("txtYears").value = document.getElementById("rangeYears").value;
+        }
+        function RateChanged(){
+            document.getElementById("txtRate").value = document.getElementById("rangeRate").value;
+        }
+        function CalculateClick(){
+            var P = parseFloat(document.getElementById("txtAmount").value);
+            var r = parseFloat(document.getElementById("txtRate").value)/12/100;
+            var n = parseInt(document.getElementById("txtYears").value) * 12;
+            var EMI =  P * r / (1- (Math.pow(1/(1 + r), n)));
+            document.getElementById("result").innerHTML = `EMI Amount &#8377; ${Math.round(EMI)}`;
+        }
+    </script>
+</head>
+<body class="container-fluid">
+   <div class="border border-3 border-primary p-3 mt-2">
+    <h2>Personal Loan EMI Calculator</h2>
+    <div class="row">
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text">Amount you need &#8377;</span>
+                <input type="text" id="txtAmount">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text">for years</span>
+                <input type="text" id="txtYears" size="4">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text">Interest rate</span>
+                <input type="text" id="txtRate" size="4">
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            &#8377; 50,000/-
+            <input type="range" onchange="AmountChanged()" id="rangeAmount" value="50000" min="50000" max="1000000">
+            &#8377; 1000000/-
+        </div>
+        <div class="col">
+            1
+            <input type="range" onchange="YearChanged()" id="rangeYears" value="1" min="1" max="5">
+            5
+        </div>
+        <div class="col">
+            10%
+            <input type="range" onchange="RateChanged()" id="rangeRate" value="10" min="10" max="15" step="0.1">
+            15%
+        </div>
+    </div>
+    <div class="d-flex mt-4 justify-content-center align-items-center">
+        <div>
+            <button onclick="CalculateClick()" class="btn btn-primary">Calculate</button>
+        </div>
+    </div>
+   </div>
+   <div class="mt-4">
+      <h1 id="result" class="text-center"></h1>
+   </div>
+</body>
+</html>
+
+6. Form Events
+    onSubmit
+    onReset
+
+7. Timer Events
+    setInterval()
+    clearInterval()
+    setTimeout()
+    clearTimeout()
+
+Component
+- Data Binding
+- Style Binding
+- Class Binding
+- Event Binding
+- Properties [ Transport data from one component to another ]
