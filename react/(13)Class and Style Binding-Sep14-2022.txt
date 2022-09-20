@@ -1,0 +1,191 @@
+iampoder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTAxMDk0MzMxMDI4/details
+
+
+
+Data Binding
+- One Way
+- Two Way
+- Bind API data
+- useState
+- useEffect
+
+                                Class Binding
+
+- It is the process of binding a css class dynamically to any element.
+- You can change the appearence of UI components dynamically.
+- CSS class is configure dynamically by using "className" property.
+
+        <button className="btn btn-primary">
+        <button className={ }>
+
+
+Ex:
+ClassBinding.css
+
+
+.dark-theme {
+    background-color: black;
+    color:white;
+    padding: 10px;
+}
+
+ClassBinding.js
+
+import { useState } from "react";
+import "./ClassBinding.css";
+
+export function ClassBinding()
+{
+    const [theme, setTheme] = useState("");
+
+    function ChangeTheme(e){
+        if(e.target.checked){
+            setTheme("dark-theme");
+        } else {
+            setTheme("");
+        }
+    }
+
+    return(
+        <div className="container-fluid d-flex justify-content-center align-items-center">
+          <div className="w-25 border border-2 border-dark p-2">
+          <form className={theme}>
+             <h3>Register User</h3>
+             <div className="form-switch">
+             <input className="form-check-input" onChange={ChangeTheme} type="checkbox"/> Dark Theme
+             </div>
+             <dl>
+                <dt>User Name</dt>
+                <dd><input type="text" className="form-control"/></dd>
+                <dt>Password</dt>
+                <dd><input type="password" className="form-control"/></dd>
+                <dt>Email</dt>
+                <dd><input type="email" className="form-control"/></dd>
+             </dl>
+             <button className="btn btn-dark w-100">Register</button>
+          </form>
+          </div>
+        </div>
+    )
+}
+
+Ex:
+ClassBinding.css
+
+
+.dark-theme {
+    background-color: black;
+    color:white;
+    padding: 10px;
+}
+.invalid-style {
+    border:2px solid red;
+    box-shadow: 2px 2px 3px red;
+    width: 100%;
+}
+.valid-style {
+    border:2px solid green;
+    box-shadow: 2px 2px 3px green;
+    width: 100%;
+}
+
+ClassBinding.js
+
+import { useState } from "react";
+import "./ClassBinding.css";
+
+export function ClassBinding()
+{
+
+    const [users, setUsers] = useState([{UserName:"john"}, {UserName:"john12"}, {UserName:"david"}]);
+    const [userMsg, setUserMsg] = useState("");
+    const [errorClass, setErrorClass] = useState("");
+    const [elementStyle, setElementStyle] = useState("");
+
+    function VerifyUser(e){
+        for(var user of users){
+            if(user.UserName==e.target.value){
+                setUserMsg("User Name Taken - Try Another");
+                setErrorClass("text-danger");
+                setElementStyle("invalid-style");
+                break;
+            } else {
+                setUserMsg("User Name Available");
+                setErrorClass("text-success");
+                setElementStyle("valid-style");
+            }
+        }
+    }
+
+    return(
+        <div className="container-fluid d-flex justify-content-center align-items-center">
+          <div className="w-50 border border-2 border-dark p-2">
+          <form >
+             <h3>Register User</h3>
+             <dl>
+                <dt>User Name</dt>
+                <dd><input type="text" onChange={VerifyUser} className={elementStyle}/></dd>
+                <dd className={errorClass} >{userMsg}</dd>
+                <dt>Password</dt>
+                <dd><input type="password" className="form-control"/></dd>
+                <dt>Email</dt>
+                <dd><input type="email" className="form-control"/></dd>
+             </dl>
+             <button className="btn btn-dark w-100">Register</button>
+          </form>
+          </div>
+        </div>
+    )
+}
+
+                                Style Binding
+- It is the process of binding inline styles.
+- Inline style is faster as it uses element CSSOM.
+   [CSS Object Model]
+- You can change the style dynamically.
+- React will not allow the basic styles directly for any element.
+
+   <div  style="color:red">    // invalid in react
+
+- React allows inline styles by using binding expression.
+
+   <div  style={ }>
+
+- Styles are defined only as JSON object.
+
+   <div  style={ {object} }>
+
+- Styles allow properties only in Camel Case
+
+        color                        color
+        font-size                    fontSize
+        background-color        backgroundColor
+
+    <div style={ {backgroundColor:"red", color:"white"} }>
+
+- Style Binding allows to change the inline style values dynamically.
+
+Ex:
+StyleBinding.js
+
+import { useState } from "react"
+
+export function StyleBinding()
+{
+    const [styleObj, setStyleObj] = useState({position:'', top:'', left:''});
+    function GetPosition(e){
+        setStyleObj({
+            position: 'fixed',
+            left: e.clientX + 'px',
+            top: e.clientY + 'px'
+        })
+    }
+    return(
+        <div onMouseMove={GetPosition}>
+            <div style={{height:"1000px"}}></div>
+            <img style={styleObj} width="50" height="50" src="images/flag.gif"/>
+        </div>
+    )
+}
+
+                                Event Binding

@@ -1,0 +1,129 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTI3NzYyNDkxOTk0/details
+
+
+
+
+- Data Binding
+    - Style Binding
+    - Class Binding
+                            React Event Binding
+                            ----------------------------
+    - Event is a message sent by sender to its subscriber in order notify
+      change.
+    - Event follows a software design pattern called "Observer".
+    - Observer is a behavioural pattern [Communication].
+    - Event uses a delegate mechanism [function pointer].
+
+    Syntax:
+            function InsertClick() { }                    => Subscriber
+
+            <button onclick="InsertClick()">        => Sender
+
+    - Subscriber defines actions to perform.
+    - Sender sends a notification, that specifies when the actions need to
+      perform.
+    - JavaScript Events are configured by BOM
+        [Browser Object Model]
+    - BOM comprises of
+        - window
+        - location
+        - navigator
+        - history
+        - document [DOM]
+    - Events are defined by "window" object
+    - React can't access "window" object
+    - React is using Virtual DOM hence it can't handle direct BOM.
+    - React can't access Browser Events.
+    - React uses "SyntheticEvents" library that communicates with
+      browser events.
+
+        SyntheticEvent [onClick] => maps => Browser Event [onclick]
+
+    - React SyntheticEvents are all same as Browser Events
+
+            1. Mouse Events
+                    onMouseOver
+                    onMouseOut
+                    onMouseDown
+                    onMouseUp
+                    onMouseMove
+            2. Keyboard Events
+                    onKeyup
+                    onKeydown
+                    onKeypress
+            3. Button Events
+                    onClick
+                    onDblClick
+                    onContextMenu
+            4. Element State Events
+                    onChange
+                    onBlur
+                    onFocus
+                    onSelectStart
+            5. Clipboard Events
+                    onCut
+                    onCopy
+                    onPaste
+            6. Form Events
+                    onSubmit
+                    onReset
+            7. Timer Events
+                    setTimeOut
+                    clearTimeOut
+                    setInterval
+                    clearInterval
+            8. Touch Events
+                    onTouchStart
+                    onTouchEnd
+                    onTouchMove  etc..
+
+        - JavaScript defines 2 default event arguments
+                    a) event
+                    b) this
+        - "event" sends the properties of current event, like
+                    clientX,
+                    clientY
+                    keyCode
+                    which
+                    altKey etc..
+        - "this" sends the properties of current object, like
+                    id, name, value, className etc..
+
+        - React SyntheticEvents can have only "event" as default
+          argument.
+
+        - We can access object related properties by using
+            "event.target"
+
+                event.clientX
+                event.clientY
+                event.ctrlKey
+
+                event.target.id
+                event.target.name
+                event.target.className
+
+        - It also allows to configure custom arguments.
+
+Ex: Event Binding
+
+export function EventBinding()
+{
+    function InsertClick(SynthenticEvent){
+        console.log(`
+            Button Id : ${SynthenticEvent.target.id} \n
+            Button Name: ${SynthenticEvent.target.name} \n
+            X Position : ${SynthenticEvent.clientX} \n
+            Ctrl Key    : ${SynthenticEvent.ctrlKey}
+
+        `);
+    }
+    return(
+        <div>
+            <button onClick={InsertClick} id="btnInsert" name="Insert">Insert</button>
+        </div>
+    )
+}
+
+        Note: React can't directly access BOM objects [window, history..]
+                It requires various Hooks.

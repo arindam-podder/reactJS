@@ -1,0 +1,241 @@
+
+imapodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTQ4NzI2ODU1Nzkx/details
+
+
+Class Members
+    - Properties
+    - Methods
+    - Accessors
+    - Constructor
+
+    Properties
+    - Properties are used to store data.
+    - They are Mutable
+   
+    Syntax:
+        class  Product
+        {
+            Name = Value;
+            Price  = 0;
+            Stock = true;
+            Rating = {  };
+            Cities = [ ]
+        }
+
+    - Properties within class are accessed by using "this" keyword.
+    - Properties outside class are accessed by using instance of class.
+
+    Syntax:
+        let obj = new Product();
+        obj.Name;
+
+    Accessors
+    --------------
+    - Accessors give a fine grained control over property.
+    - Accessors allow to change the property behaviour dynamically.
+    - Accessors define how to control the read and write actions over
+      property.
+    - Accessors are 2 types
+
+        a) get()            gettter  to read value from property
+        b) set()            setter to write value into a property
+
+    - Using accessors you can control the read and write permissions over
+      any property
+   
+    Syntax:
+            class  Product
+            {
+               _productName;
+
+                get  ProductName() {
+                 return this._productName;
+                }
+               set   ProductName(newName) {
+                this._productName = newName;
+               }    
+            }
+ Ex:
+ <script>
+    var username = prompt("Enter User Name");
+    var role = prompt("Enter Your Role");
+    var productname = prompt("Enter New Name for Product");
+    class Product
+    {
+        _productName;
+        //Accessors
+        get ProductName(){
+            return this._productName;
+        }
+        set ProductName(newName){
+            if(role=="admin") {
+                this._productName = newName;
+            } else {
+                document.write(`Hello ! ${username} You are not authorized to set Product Name`);
+            }
+        }
+    }
+    let obj = new Product();
+    obj.ProductName = productname;
+    if(obj.ProductName) {
+        document.write(`Product Name : ${obj.ProductName}`);
+    }
+</script>
+
+        - Accessors allow to define an alias name for accessing any property
+          defined at multi level hierarchy.  [Aliasing]
+
+Ex:
+<script>
+    class Product
+    {
+        Name = "Samsung TV";
+        Rating = {
+            CustomerRating : {
+                _2022 : {Rate: 4.3, Count: 2400},
+                _2021 : {Rate: 4.1, Count: 6000}
+            }
+        }
+        get Rating_2022(){
+            return this.Rating.CustomerRating._2022.Rate;
+        }
+
+    }
+    let obj = new Product();
+    document.write(`2022 Rating : ${obj.Rating_2022}`);
+</script>
+
+    Methods
+    ------------
+    - It defines actions to perform.
+      - It is always a void type. How ever javascript and return method value.
+    - All method rules are same as function.
+    - All method parameters are same as function.
+    - Method is mutable.
+
+    Syntax:
+        class Product
+        {
+           Name = "TV";
+           Price = 45000.44;
+           Qty = 3;
+           Total() {
+             return this.Qty * this.Price;
+            }
+           Print(){
+                console.log(`Name=${this.Name}\nTotal=${this.Total()`);
+           }
+          }
+
+    Constructor
+    ---------------
+    - Constructor is used for Instantiation [Creating Object].
+    - It is a special type of sub-routine that executes automatically for every
+      object.
+    - Every class have a built-in constructor. [Default Constructor]
+    - JavaScript constructor is "anonymous" type.
+
+     class  Product
+     {
+           constructor() { }
+     }
+
+    - If you want any actions to perform at the time of creating object then
+      you can define using constructor.
+
+    - JavaScript constructor can't overload.
+   
+Ex:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        class Database
+        {
+            constructor(){
+                alert("Connected to Database");
+            }
+            Insert(){
+                document.write("Record Inserted");
+            }
+            Delete(){
+                document.write("Record Deleted");
+            }
+        }
+        function InsertClick(){
+            let obj = new Database();
+            obj.Insert();
+        }
+        function DeleteClick(){
+            let obj = new Database();
+            obj.Delete();
+        }
+    </script>
+</head>
+<body>
+    <button onclick="InsertClick()">Insert</button>
+    <button onclick="DeleteClick()">Delete</button>
+</body>
+</html>
+
+     Inheritance
+     ---------------
+     - It enables extensibility.
+     - You can extend a class and its functionality by using Inheritnace.
+
+Ex:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        class HDFC_Version_2019 {
+            Personal = "Personal Banking Services - General Customers<br>";
+            NRI = "NRI Banking Services - NRI Customers<br>";
+            Print(){
+                document.write(`${this.Personal}<br>${this.NRI}<br>`);
+            }
+        }
+        class HDFC_Version_2020 extends HDFC_Version_2019 {
+            Loans = "HDFC Loans - Car, Personal, Housing<br>";
+            Print(){
+                super.Print();
+                document.write(`${this.Loans}<br>`);
+            }
+        }
+        class HDFC_Version_2021 extends HDFC_Version_2020 {
+            Agri = "Govt. Schemes<br>";
+            Print(){
+                super.Print();
+                document.write(`${this.Agri}`);
+            }
+        }
+        function InstallClick(){
+            var version = document.getElementById("lstVersions").value;
+            alert(version);
+            switch(version){
+                case "2019":
+                let obj1 = new HDFC_Version_2019();
+                obj1.Print();
+                break;
+                case "2020":
+                let obj2 = new HDFC_Version_2020();
+                obj2.Print();
+                break;
+                case "2021":
+                let obj3 = new HDFC_Version_2021();
+                obj3.Print();
+                break;
+            }
+        }
+    </script>
+</head>
+<body>
+    Select Bank App Version
+    <select id="lstVersions">
+        <option>2019</option>
+        <option>2020</option>
+        <option>2021</option>
+    </select>
+    <button onclick="InstallClick()">Install</button>
+</body>
+</html>

@@ -1,0 +1,144 @@
+iampodder - https://classroom.google.com/c/NDk4MDk2NDYwNTY5/m/NTQ2ODM3OTMzNzA2/details
+
+
+
+React Data Binding
+- Binding Primitive and Non Primitive Types
+- One Way Binding
+- Two Way Binding
+
+
+                                Two Way Binding
+- React supports only one way binding.
+- To handle Two way binding, explicitly we have to use events.
+- React component can't use variables for storing data.
+- Variables are Immutable
+- Data is managed in function components by using "state".
+
+FAQ: What is State? Why we need State?
+Ans:
+- Every Web application uses "http" as protocol.
+- Http is a state less protocol.
+- It can't remember information between requests.
+- Once the request is complete, then it perform clean up.
+- Hence Every web application have to depend on
+   "State Management Techniques"
+- There are various state management techniques
+        1. Query String
+        2. Cookies
+        3. Session
+        4. Application etc..
+- State allows to store the data and make it available across requests.
+- State is Mutable.
+
+Configuring State in React Component:
+- React provides a Hook method "useState".
+- It is used to configure a state for component.
+- So that you can store values and make them available across requests.
+- State is mutable.
+
+  import  { useState }  from  "react";
+
+  const [userName, setUserName]  =    useState("John");
+
+  { userName }   // John
+
+  setUserName("David");
+
+  { userName }   // David
+
+
+- Two way binding uses "onChange" event as "Single Source of Truth".
+- It is only the event to indentify the changes. Hence every element change must have "onChange" event configured.
+
+Syntax:
+    <input type="text"  onChange={handleChange}>
+
+
+Ex:
+DataBinding.js
+
+import { useState } from "react";
+
+export function DataBinding(){
+   
+    const [product, setProduct] = useState({Name:"TV", Price:0, Stock:true, City:"Hyd"});
+    const [cities] = useState(["Hyd","Delhi","Mumbai"]);
+
+
+    function handleNameChange(event){
+        setProduct({
+            Name: event.target.value,
+            Price: product.Price,
+            Stock: product.Stock,
+            City: product.City
+        })
+    }
+    function handlePriceChange(event){
+        setProduct({
+            Name: product.Name,
+            Price: event.target.value,
+            Stock: product.Stock,
+            City: product.City
+        })
+    }
+    function handleStockChange(event){
+        setProduct({
+            Name: product.Name,
+            Price: product.Price,
+            Stock: event.target.checked,
+            City: product.City
+        })
+    }
+    function handleCityChange(event){
+        setProduct({
+            Name: product.Name,
+            Price: product.Price,
+            Stock: product.Stock,
+            City: event.target.value
+        })
+    }
+    function handleNameBlur(){
+        alert("Name Entered Successfully..");
+    }
+    return(
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-3">
+                    <h3>Register Product</h3>
+                    <dl>
+                        <dt>Name</dt>
+                        <dd><input type="text" value={product.Name} onBlur={handleNameBlur}  onChange={handleNameChange}  className="form-control" /></dd>
+                        <dt>Price</dt>
+                        <dd><input type="text" value={product.Price} onChange={handlePriceChange}  className="form-control" /></dd>
+                        <dt>Stock</dt>
+                        <dd className="form-switch"><input className="form-check-input" checked={product.Stock} onChange={handleStockChange}  type="checkbox"/> Available </dd>
+                        <dt>Shipped To</dt>
+                        <dd>
+                            <select onChange={handleCityChange} value={product.City} className="form-select">
+                                {
+                                    cities.map(city=>
+                                        <option key={city}>{city}</option>
+                                        )
+                                }
+                            </select>
+                        </dd>
+                    </dl>
+                </div>
+                <div className="col-9">
+                    <h3>Product Details</h3>
+                    <dl>
+                        <dt>Name</dt>
+                        <dd>{product.Name}</dd>
+                        <dt>Price</dt>
+                        <dd>{product.Price}</dd>
+                        <dt>Stock</dt>
+                        <dd>{(product.Stock==true)?"Available":"Out of Stock"}</dd>
+                        <dt>Shipped To</dt>
+                        <dd>{product.City}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    )
+}

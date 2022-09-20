@@ -1,0 +1,168 @@
+
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NDg5ODY5NjUwMDU3/details
+
+
+Function Component
+- Data Binding
+- Style Binding
+- Class Binding
+- Event Binding
+
+                           React Class Components
+- JavaScript Module
+- JavaScript Class
+
+FAQ: What is a Module?
+Ans:
+- JavaScript module comprises of a set of values, functions and classes.
+- Module is used to build a library for application.
+- You can import, customize and implement according to requirements.
+- Module provides library required for building application.
+
+FAQ: What is a Module System?
+Ans:
+- Modules of JavaScript are managed and controlled by Module System.
+- Encapsulation, Abstraction, Inheritance, Instantiation, Polymorphism etc are managed by Module System.
+- There are various module systems
+        a) Common JS
+        b) Require JS
+        c) UMD (Universal Module Distribution)
+        d) AMD (Asynchronous Module Distribution)
+- JavaScript compiling techniques
+        a) JIT [Just In Time]
+        b) AOT [Ahead of Time]
+
+
+Configuring Modules
+----------------------------
+- Every JavaScript file and its scope is considered as a "Module".
+   
+                HomeModule.js
+
+        Module Name        :  HomeModule
+
+- You can define Variables, Functions and Classes in a Module.
+
+        var  x = 10;
+
+        function PrintX(){
+           console.log("x=" + x);
+        }
+
+       
+- Every member of a module is private in access, you can't access
+  outside module.
+
+- In order to access outside module, ever member needs a marker "export".
+
+         export function PrintX()  {  }
+                    (or)
+         const  PrintX = ( ) => {  }
+         export PrintX;
+                    (or)
+         export const PrintX = () => { }
+
+- Export uses Lazy loading technique.
+- To implement Eager loading of any member you can mark It as
+    "default"
+
+        export default  function PrintX() {
+        }
+
+- Every module can have only one "default" member.
+
+- You can import and implement the functions
+
+     import  { nonDefault_function } from  "ModuleName";
+
+     import  Default_function  from "ModuleName";
+
+    import  {non_default}, default_function  from "ModuleName";
+
+   
+Ex:
+1. Add a new folder hierarchy
+
+        library / modules
+
+2. Add a new file  "HomeModule.js"
+
+   
+export function Hello(str){
+    return `Hello ! ${str}`;
+}
+
+export default function Addition(a, b) {
+    return a + b;
+}
+
+3. Create a new HTML page
+            home.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./library/modules/HomeModule.js"></script>
+    <script type="module">
+        import Addition, {Hello} from "./library/modules/HomeModule.js";
+        document.querySelector("h2").innerHTML = Hello("John");
+        document.querySelector("p").innerHTML = "Addition = " + Addition(20,40);
+    </script>
+</head>
+<body>
+    <h2></h2>
+    <p></p>
+</body>
+</html>
+
+FAQ: What is a class?
+Ans :
+- Class is a program template.
+- Template comprises of sample data and logic, which you can customize and implement according your requirements.
+- Class is reffered as Model when it is mapping to "Data" requirements.
+- Class is reffered as Entity when it is mapping to "Business" requirements.
+
+
+FAQ: What are the members of class?
+Ans :
+- Class comprises of any 4 members
+    1. Property
+    2. Method
+    3. Accessor
+    4. Constructor
+
+FAQ: Can we define a variable as class member?
+Ans: No.
+
+FAQ: Why we can't define variable as class member?
+Ans:  Variables are immutable, class can't contain immutable members.
+
+FAQ: How data is stored in class?
+Ans:  By using Properties.
+
+
+FAQ: Can we define a function as class member?
+Ans:  No. Logic is defined by using method.
+
+FAQ: What is difference between function and method?
+And:  Function is immutable and method is mutable
+         Function always intended to return value.
+         Method always intended to be void.
+
+
+FAQ: How to configure a class?
+Ans :
+        1. Class Expression
+        2. Class Declaration
+
+        const  Login = class   {   }         // expression
+
+        class Login {                        // declaration
+
+        }
+
+
+Properties, Accessors, Methods and Constructor

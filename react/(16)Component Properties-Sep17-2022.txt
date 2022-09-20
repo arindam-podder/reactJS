@@ -1,0 +1,152 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTQ4MzQzNDc4ODM1/details
+
+
+- Data Binding
+- Style Binding
+- Class Binding
+- Event Binding
+
+                            Component Properties
+
+FAQ: What is the purpose of component?
+Ans:  To create resuable templates and customize according to requirements.
+
+FAQ: How to reuse a component?
+Ans:  - Import the library of component
+         - Inject the component using its selector name.
+
+ Syntax:
+        import  { Login }  from  './components/login';
+
+        <div>
+            <Login />
+        </div>
+
+FAQ: How to customize component?
+Ans:  By using Properties.
+
+FAQ: How to define properties for a component?
+Ans: In a function component properties are defined as parameters.
+
+FAQ: What a property can do?
+Ans:  It can modify the component.
+         It allows to customize the component.
+
+FAQ: What type of properties we can configure in component?
+Ans:  Component properties are object type with key and value. [class]
+        Component properties can be customized with all primitive and
+        non-primitive types.
+
+FAQ: Can we define multiple properties for component?
+Ans : Yes.
+
+Syntax:
+        export function ComponentName(props) {
+
+        }
+
+        <ComponentName  props={value} />
+
+Ex:
+    export function Login(props)
+    {
+       <h2> { props.title } </h2>
+    }
+
+     <Login title={'string'} />
+
+
+Ex:
+1. Add a new component
+        LoginComponent.js
+
+//module - LoginComponent
+
+import React from "react";
+
+export function LoginComponent(props){
+    return (
+     <React.Fragment>
+        <div className="container-fluid d-flex justify-content-center mt-3">
+        <form className="border border-2 border-primary p-3 rounded rounded-3">
+         <h2> <span className="bi bi-person-fill"></span> {props.title} </h2>
+         <dl>
+            <dt>User Name</dt>
+            <dd><input type="text" className="form-control"/></dd>
+            <dt>Password</dt>
+            <dd><input type="password" className="form-control"/></dd>
+         </dl>
+          <button className="btn btn-primary w-100">{props.title}</button>
+         </form>
+        </div>
+     </React.Fragment>
+    );
+}
+
+2. Add a another component
+    PropertiesDemo.js
+
+import { LoginComponent } from "./LoginComponent"
+export function PropertiesDemo(){
+    return(
+        <div className="container-fluid">
+           <h3>Component Properties</h3>
+           <LoginComponent title={'Customer Login'} />
+        </div>
+    )
+}
+
+Ex: Reusable Grid
+
+GridComponent.js
+
+
+export function GridComponent(props){
+    return(
+        <div className="container-fluid">
+            <table className="table table-hover">
+                <thead>
+                    <tr>
+                      {
+                        props.fields.map((field)=>
+                          <th>{field}</th>
+                        )
+                      }
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.data.map(item=>
+                            <tr>
+                                {
+                                    Object.keys(item).map(key=>
+                                        <td>{item[key]}</td>
+                                        )
+                                }
+                            </tr>
+                            )
+                    }
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+PropertiesDemo.js
+
+import { useState } from "react";
+import { GridComponent } from "./GridComponent";
+
+export function PropertiesDemo(){
+    const [employees] = useState([{EmployeeId:1, FirstName:'Kiran', LastName:'Kumar', Designation:'Admin', Salary:50000.42},{EmployeeId:2, FirstName:'Tom', LastName:'Hanks', Designation:'Manager', Salary:150000.42}])
+    return(
+        <div className="container-fluid">
+           <h3>Products List</h3>
+           <GridComponent fields={['Name','Price']} data={[{Name:'Samsung TV', Price:45000.44},{Name:'Nike Casuals', Price:2400.44}]} />
+           <h3>Employee List</h3>    
+           <GridComponent fields={['EmployeeId', 'First Name', 'Last Name', 'Designation', 'Salary']} data={employees} />
+        </div>
+    )
+}
+
+                                Class Component
