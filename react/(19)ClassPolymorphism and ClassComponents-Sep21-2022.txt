@@ -1,0 +1,211 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTQ4OTg0Nzg0MDYw/details
+
+
+Class Members
+Class Inheritance
+
+FAQ:What is Inheritance rule?
+And:  The derived class constructor must call the super class constructor.
+
+Syntax:
+        class Super
+        {
+        }
+        class Derived extends Super
+        {
+          constructor() {
+              super();
+           }
+        }
+
+                                Polymorphism
+- Poly means many
+- Morphos means Forms
+- It is the behaviour of any component, which can work for various situations.
+- Polymorphism is creating a single base class object using the memory of multiple derived classes.
+
+Ex:
+<script>
+    class Employee {
+        FirstName;
+        LastName;
+        Designation;
+        Print(){
+            document.write(`${this.FirstName} ${this.LastName} - ${this.Designation}<br>`);
+        }
+    }
+    class Developer extends Employee
+    {
+        FirstName = "Raj";
+        LastName = "Kumar";
+        Designation = "Developer";
+        DeveloperRole = "Build, Debug, Test, Deploy";
+        Print(){
+            super.Print();
+            document.write(`Developer Role : ${this.DeveloperRole}`);
+        }
+    }
+    class Admin extends Employee
+    {
+        FirstName = "Kiran";
+        LastName = "Kumar";
+        Designation = "Admin";
+        AdminRole = "Authorizations";
+        Print(){
+            super.Print();
+            document.write(`Admin Role : ${this.AdminRole}`);
+        }
+    }
+    class Manager extends Employee
+    {
+        FirstName = "Tom";
+        LastName = "Hanks";
+        Designation = "Manager";
+        ManagerRole = "Approvals";
+        Print(){
+            super.Print();
+            document.write(`Manager Role : ${this.ManagerRole}`);
+        }
+    }
+
+    let employees = new Array(new Developer(), new Admin(), new Manager());
+    let designation = prompt("Enter Designation");
+    for(var employee of employees) {
+        if(employee.Designation==designation) {
+            employee.Print();
+        }
+    }
+
+</script>
+
+Real World
+- POPS    [Process Oriented Programming System]
+- OBPS    [Object Based Programming System]
+- OOPS    [Object Oriented Programming System]
+
+Issues with OOP?
+- It will not support low level features.
+- It can't directly interact with hardware services.
+- It uses more memory.
+- It is slow.
+- It is heavy on applications.
+
+                            React Class Component
+                            ---------------------------------
+
+- React can create a component using JavaScript Class.
+- To get component behaviour every class have to extend "React.Component" base class.
+
+Syntax:
+        class LoginComponent extends React.Component
+        {
+        }
+
+- According to inheritance rules your component class must have a constructor which calls super class construtor.
+
+Syntax:
+       class LoginComponent  extends React.Component
+        {
+        constructor() {
+            super(props);
+         }
+       }
+
+- React Component base class is configure with a constructor that take properties as params.
+
+- React class component returns JSX elements by using "render()" that returns JSX.
+
+Syntax:
+    class LoginComponent extends React.Component
+    {
+         constructor(){
+         super(props);
+        }
+         render() {
+            return(
+               <> JSX </>
+             )
+         }
+    }
+
+
+Ex:
+LoginClassComponent.js
+
+
+import React from "react";
+
+export class LoginClassComponent extends React.Component
+{
+    constructor(){
+        super();
+    }
+    Title = "User Login";
+
+    LoginClick(){
+        alert("Login Clicked");
+    }
+
+    render(){
+        return(
+            <div className="container-fluid">
+                <h3>{this.Title}</h3>
+                <dl>
+                    <dt>User Name</dt>
+                    <dd><input type="text"/></dd>
+                    <dt>Password</dt>
+                    <dd><input type="password"/></dd>
+                </dl>
+                <button onClick={this.LoginClick}>Login</button>
+            </div>
+        )
+    }
+}
+
+FAQ: What is difference between class and function component?
+Ans :
+
+    Class                                    Function
+    ---------------------------------------------------------------------
+    Statefull component                    Stateless component
+
+    State is configured implicitly        State is configured explicity [useState]
+
+    It supports Life Cycle Hooks        It requires explicit useEffect()
+
+    It is not supported with Hooks        It is supported with hooks.
+
+    It uses render() for JSX                It can return JSX directly
+
+    It is slow                                It is fast
+
+    It uses more memory                It uses less memory
+
+    It can be extended                    It can't be extended
+
+
+Summary:
+- If you need a component that extends regularly then use class component.
+- If you need component without regular extentions then use function component.
+
+
+State in Class Component:
+- Class component is pre-defined with state.
+- You have to access and configure state at the time of creating component.
+   [ Constructor ]
+
+Syntax:
+        constructor()
+        {
+            super();
+            this.state = {
+                title : "string",
+                price: 0,
+                stock: true,
+                rating: { },
+                cities : [ ]
+            }
+        }
+
+        { this.state.title }
+        { this.state.cities.map() }
