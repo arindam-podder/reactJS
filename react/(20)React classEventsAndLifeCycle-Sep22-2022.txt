@@ -1,0 +1,207 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTQ5MjgxMjQ0NDA4/details
+
+Class Components
+1. State in class component
+2. Events in class component
+
+- Class component events are defined by using "Methods".
+- SyntheticEvents are same as function component.
+- Event will not point towards a function, It will point towards a method.
+
+Syntax:
+        class Login extends  React.Component
+        {
+            constructor() {
+               super();
+             }
+            LoginClick() {
+
+            }
+            render(){
+                return(
+                         <button onClick={this.LoginClick}> Login </button>
+                )
+            }
+        }
+- If event method is using state then event need a bind method that binds with the class.
+
+Syntax-1:
+        constructor()
+        {
+             this.InsertClick = this.InsertClick.bind(this);
+        }
+
+Syntax-2:
+        <button onClick={this.InsertClick.bind(this)}>
+
+Ex: LoginClassComponent.js
+
+
+import React from "react";
+
+export class LoginClassComponent extends React.Component
+{
+   constructor(){
+     super();
+     this.state = {
+        msg : ''
+     }
+     this.InsertClick = this.InsertClick.bind(this);
+   }
+   InsertClick(){
+     this.setState({
+        msg: 'Record Inserted'
+     })
+   }
+   DeleteClick(){
+      this.setState({
+        msg: 'Record Deleted'
+      })
+   }
+   render(){
+    return(
+        <div className="container-fluid">
+            <h3>{this.state.msg}</h3>
+            <button onClick={this.InsertClick}>Insert</button>
+            <button onClick={this.DeleteClick.bind(this)}>Delete</button>
+        </div>
+    )
+   }
+}
+
+
+Ex: Event and Binding
+
+ClassDataBinding.js
+------------------------------
+
+import React from "react";
+
+
+export class ClassDataBinding extends React.Component
+{
+    constructor(){
+        super();
+        this.state = {
+            Name: '',
+            City: '',
+            Stock: false
+        }
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleCityChange = this.handleCityChange.bind(this);
+        this.handleStockChange = this.handleStockChange.bind(this);
+    }
+
+    handleNameChange(e){
+        this.setState({
+            Name: e.target.value,
+            City: this.state.City,
+            Stock: this.state.Stock
+        })
+    }
+    handleCityChange(e){
+        this.setState({
+            Name: this.state.Name,
+            City: e.target.value,
+            Stock: this.state.Stock
+        })
+    }
+    handleStockChange(e){
+        this.setState({
+            Name: this.state.Name,
+            City: this.state.City,
+            Stock: e.target.checked
+        })
+    }
+
+    render(){
+        return(
+            <div className="container-fluid">
+                <h2>Register Product</h2>
+                <dl>
+                    <dt>Name</dt>
+                    <dd><input type="text" onChange={this.handleNameChange}/></dd>
+                    <dt>City</dt>
+                    <dd>
+                        <select onChange={this.handleCityChange}>
+                            <option>Delhi</option>
+                            <option>Hyd</option>
+                        </select>
+                    </dd>
+                    <dt>Stock</dt>
+                    <dd><input type="checkbox" onChange={this.handleStockChange} /> Available</dd>
+                </dl>
+                <h3>Product Details</h3>
+                <dl>
+                    <dt>Name</dt>
+                    <dd>{this.state.Name}</dd>
+                    <dt>City</dt>
+                    <dd>{this.state.City}</dd>
+                    <dt>Stock</dt>
+                    <dd>{(this.state.Stock==true)?"Available":"Out of Stock"}</dd>
+                </dl>
+            </div>
+        )
+    }
+}
+
+Summary
+- State is configured implicitly in class  
+        this.state =  { }
+- State uses the setter  
+        this.setState({ })
+- Event uses method
+- Event needs bind() while using state.
+- Class Binding and Style Binding are same as in function component.
+
+
+                    Class Component Life Cycle Hooks
+
+- Every class component comprises following phases
+        1. Mounting            Loads Component
+        2. Updating            ClassBinding, Style, Event
+        3. Unmounting        Clean Memory and Unload the component
+
+- Component life cycle phases are managed by following methods
+
+        componentDidMount()
+        componentWillMount()
+        componentDidUpdate()
+        componentWillUnMount()
+
+Ex:
+import React from "react";
+
+
+export class ClassApiDemo extends React.Component
+{
+    constructor(){
+        super();
+        this.state = {
+            categories : []
+        }
+    }
+    componentDidMount(){
+        fetch("http://fakestoreapi.com/products/categories&quot;)
+        .then(response=>response.json())
+        .then(data=>{
+            this.setState({
+                categories : data
+            })
+        })
+    }
+    render(){
+        return(
+            <div className="container-fluid">
+                <h2>Categories</h2>
+                <ol>
+                    {
+                        this.state.categories.map(category=>
+                            <li key={category}>{category}</li>
+                            )
+                    }
+                </ol>
+            </div>
+        )
+    }
+}
