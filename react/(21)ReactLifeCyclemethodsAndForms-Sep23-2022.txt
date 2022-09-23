@@ -1,0 +1,317 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTQ5NTYwODM3MTI3/details'
+
+
+
+Class Component Life Cycle Methods
+1. Mounting
+2. Updating
+3. Unmounting
+
+Mounting
+- It defines actions to perform at the time of loading component into memory.
+- Methods
+        a) componentWillMount()
+        b) componentDidMount()
+
+Updating
+- It defines actions on component update.
+- Update includes event binding, property binding, class binding etc.
+- Method
+        a) componentDidUpdate()
+
+Unmount
+- It defines actions to perform at the time of unloading the component.
+- Usually component unmounts when any another component is requested.
+- Method
+        a) componentWillUnMount()
+
+Ex: LifeCycleDemo.js
+
+import React from "react";
+
+export class SuccessComponent extends React.Component
+{
+    componentWillMount(){
+        alert('Success Component Requested');
+    }
+    componentDidMount(){
+        alert('Success Component Mounted Successfully..');
+    }
+    componentWillUnmount(){
+        alert('Success Component will unmount');
+    }
+    render(){
+        return(
+            <h2>Login Success</h2>
+        )
+    }
+}
+
+export class ErrorComponent extends React.Component
+{
+    componentWillMount(){
+        alert('Error Component Requested');
+    }
+    componentDidMount(){
+        alert('Error Component Mounted Successfully..');
+    }
+    componentWillUnmount(){
+        alert('Error Component will unmount');
+    }
+    render(){
+        return(
+            <h2>Invalid Credentials</h2>
+        )
+    }
+}
+
+
+export class LifeCycleDemo extends React.Component
+{
+    constructor(){
+        super();
+        this.state = {
+            page : '',
+            UserDetails: {
+                UserName: '',
+                Password: ''
+            }
+        }
+        this.handlNameChange = this.handlNameChange.bind(this);
+        this.handlPasswordChange = this.handlPasswordChange.bind(this);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+    }
+
+    handlNameChange(e){
+        this.setState({
+            UserDetails: {
+                UserName: e.target.value,
+                Password: this.state.UserDetails.Password
+            }
+        })
+    }
+    handlPasswordChange(e){
+        this.setState({
+            UserDetails: {
+                UserName: this.state.UserDetails.UserName,
+                Password: e.target.value
+            }
+        })
+    }
+
+    handleLoginClick(){
+        if(this.state.UserDetails.UserName=="john_nit" && this.state.UserDetails.Password=="john@11") {
+            this.setState({
+                page: <SuccessComponent />
+            })
+        } else {
+            this.setState({
+                page: <ErrorComponent />
+            })
+        }
+    }
+
+    render(){
+        return(
+            <div className="container-fluid">
+                <h2>User Login</h2>
+                <dl>
+                    <dt>User Name</dt>
+                    <dd><input onChange={this.handlNameChange} type="text"/></dd>
+                    <dt>Password</dt>
+                    <dd><input onChange={this.handlPasswordChange} type="password"/></dd>
+                </dl>
+                <button onClick={this.handleLoginClick}>Login</button>
+                <hr/>
+                <div>
+                    {this.state.page}
+                </div>
+            </div>
+        )
+    }
+}
+
+Properties in Class Component
+- It is similar to props in function component.
+- Constructor uses "super()" with properties.
+
+    constructor() {
+        super(props);
+    }
+
+- "props" is an object with key and value
+
+    this.props.key = string, boolean, number, array, object
+
+Ex:
+import React from "react";
+
+export class DetailsComponent extends React.Component
+{
+    constructor(){
+        super(props);
+    }
+    render(){
+        return(
+            <div>
+                {this.props.product.Name}
+            </div>
+        )
+    }
+}
+
+export  class ClassPropertiesDemo extends React.Component
+{
+    constructor(){
+        super();
+    }
+    render(){
+        return(
+            <div className="container-fluid">
+                <h2>Product Details</h2>
+                <DetailsComponent product={{Name:'Samsung TV'}} />
+            </div>
+        )
+    }
+}
+
+
+Ex:
+import React from "react";
+
+export function DetailsComponent(props){
+    return(
+        <div>
+            <h2>Details</h2>
+            {props.product.Name}
+        </div>
+    )
+}
+
+export  class ClassPropertiesDemo extends React.Component
+{
+    constructor(){
+        super();
+    }
+    render(){
+        return(
+            <div className="container-fluid">
+                <h2>Product Details</h2>
+                <DetailsComponent product={{Name:'Samsung TV'}} />
+            </div>
+        )
+    }
+}
+
+Summary Class and Function Component
+- Data Binding
+- Event Binding
+- Class Binding
+- Style Binding
+- State
+- Properties
+
+                             React Forms and Validation
+- React can use basic HTML approach for forms and validations.
+- It requires lot of event and state binding techniques.
+- It requires lot of validation functions.
+
+Ex: FormDemo.js
+
+
+import { useState } from "react"
+
+
+export function FormDemo()
+{
+    const [userDetails, setUserDetails] = useState({Name:'',Age:0, Mobile:'', City:''});
+    const [NameError, setNameError] = useState('');
+    const [MobileError, setMobileError] = useState('');
+
+    function NameChange(e){
+        setUserDetails({
+            Name: e.target.value,
+            Age: userDetails.Age,
+            Mobile: userDetails.Mobile,
+            City: userDetails.City
+        })
+    }
+    function AgeChange(e){
+        setUserDetails({
+            Name: userDetails.Name,
+            Age: e.target.value,
+            Mobile: userDetails.Mobile,
+            City: userDetails.City
+        })
+    }
+    function MobileChange(e){
+        setUserDetails({
+            Name: userDetails.Name,
+            Age: userDetails.Age,
+            Mobile: e.target.value,
+            City: userDetails.City
+        })
+    }
+    function CityChange(e){
+        setUserDetails({
+            Name: userDetails.Name,
+            Age: userDetails.Age,
+            Mobile: userDetails.Mobile,
+            City: e.target.value
+        })
+    }
+    function RegisterClick(e){
+        e.preventDefault();
+        if(userDetails.Name=="") {
+            setNameError("User Name Required");
+        } else {
+            setNameError("");
+            alert(JSON.stringify(userDetails));
+        }
+    }
+    function VerifyName(e){
+        if(e.target.value==""){
+            setNameError("User Name Required");
+        } else {
+            setNameError("");
+        }
+    }
+    function VerifyMobile(e){
+        if(e.target.value.match(/\+91\d{10}/)){
+            setMobileError("");
+        }else {
+            setMobileError("Invalid Mobile");
+        }
+    }
+
+    return(
+        <div className="container-fluid">
+            <form onSubmit={RegisterClick}>
+                <h2>Register User</h2>
+                <dl>
+                    <dt>User Name</dt>
+                    <dd><input onChange={NameChange} onKeyUp={VerifyName} type="text"/></dd>
+                    <dd className="text-danger">{NameError}</dd>
+                    <dt>Age</dt>
+                    <dd><input onChange={AgeChange} type="text"/></dd>
+                    <dt>Mobile</dt>
+                    <dd><input onChange={MobileChange} onKeyUp={VerifyMobile} type="text"/></dd>
+                    <dd className="text-danger">{MobileError}</dd>
+                    <dt>City</dt>
+                    <dd>
+                        <select onChange={CityChange}>
+                            <option>Select City</option>
+                            <option>Delhi</option>
+                            <option>Hyd</option>
+                        </select>
+                    </dd>
+                </dl>
+                <button>Register</button>
+            </form>
+        </div>
+    )
+}
+
+- Better to use 3rd Party forms
+    - Formik - Yup
+    - Kendo  etc..
