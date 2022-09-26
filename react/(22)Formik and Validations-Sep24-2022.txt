@@ -1,0 +1,143 @@
+
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTAxNzUzNTAwMDc5/details
+
+
+React Forms
+- React uses HTML forms and Validations
+
+                                       Formik
+- Formik is a 3rd party React Forms library.
+- It simplifies the form interactions in React.
+- It provides pre-defined events that manage various interactions
+
+            onChange
+            onBlur
+            onSubmit
+
+- You can bind the events with elements, these events are configured implicitly.
+
+- You have to install formik library for project
+
+        >npm install formik --save
+
+- Formik library provides  "useFormik" hook, it allows to configure a form dynamically which you can bind with HTML form.
+
+Syntax:
+        import   useFormik from  "formik";
+
+        const formik = useFormik({
+            initialValues: { },                => Name, Mobile, Age
+            onSubmit: () => { }             => returns values
+            validate : () => { }
+        })
+
+        <input type="text"  name="Name"  value={formik.values.Name} onChange={formik.handleChange} />
+
+        <form onSubmit={formik.handleSubmit}>
+
+
+Ex:
+FormikDemo.js
+
+import { useFormik } from "formik";
+
+export function FormikDemo()
+{
+    const formik = useFormik({
+        initialValues: {
+            UserName: '',
+            Age: 0,
+            Mobile: ''
+        },
+        onSubmit : (values)=>{
+            alert(JSON.stringify(values));
+        }
+    })
+    return(
+        <div className="container-fluid">
+            <form onSubmit={formik.handleSubmit}>
+                <h2>Register User</h2>
+                <dl>
+                    <dt>User Name</dt>
+                    <dd><input name="UserName" onChange={formik.handleChange} value={formik.values.UserName} type="text"/></dd>
+                    <dt>Age</dt>
+                    <dd><input name="Age" onChange={formik.handleChange} value={formik.values.Age} type="text" /></dd>
+                    <dt>Mobile</dt>
+                    <dd><input name="Mobile" onChange={formik.handleChange} value={formik.values.Mobile} type="text" /></dd>
+                </dl>
+                <button>Register</button>
+            </form>
+        </div>
+    )
+}
+
+                             Validation in Formik
+- Validation is the process of verifying user input.
+- Validation is required to ensure that contradictionary and unauthorized data is not get stored into database.
+- Validation can handled
+        a) Client Side
+        b) Server Side
+- Formik uses  validate function to verify the fields and report errors.
+- However formik requires all manual validation functions to configure.
+
+Ex:
+FormikDemo.js
+
+import { useFormik } from "formik";
+
+export function FormikDemo()
+{
+    function ValidateUser(FormCollection){
+        var errors = {};
+
+        if(FormCollection.UserName=="") {
+            errors.UserName = "User Name Required";
+        } else if(FormCollection.UserName.length<4) {
+            errors.UserName = "Name too short..";
+        } else if(FormCollection.UserName.length>10) {
+            errors.UserName = "Name too long..";
+        }
+
+        if(FormCollection.Age=="") {
+            errors.Age = "Age Required";
+        } else if (isNaN(FormCollection.Age)) {
+            errors.Age = "Age must be a Number";
+        }
+
+        if(FormCollection.Mobile=="") {
+            errors.Mobile = "Mobile Required";
+        }
+
+        return errors;
+    }
+    const formik = useFormik({
+        initialValues: {
+            UserName: '',
+            Age: 0,
+            Mobile: ''
+        },
+        onSubmit : (values)=>{
+            alert(JSON.stringify(values));
+        },
+        validate : ValidateUser
+    })
+    return(
+        <div className="container-fluid">
+            <form onSubmit={formik.handleSubmit}>
+                <h2>Register User</h2>
+                <dl>
+                    <dt>User Name</dt>
+                    <dd><input name="UserName" onChange={formik.handleChange} value={formik.values.UserName} type="text"/></dd>
+                    <dd className="text-danger">{formik.errors.UserName}</dd>
+                    <dt>Age</dt>
+                    <dd><input name="Age" onChange={formik.handleChange} value={formik.values.Age} type="text" /></dd>
+                    <dd className="text-danger">{formik.errors.Age}</dd>
+                    <dt>Mobile</dt>
+                    <dd><input name="Mobile" onChange={formik.handleChange} value={formik.values.Mobile} type="text" /></dd>
+                    <dd className="text-danger">{formik.errors.Mobile}</dd>
+                </dl>
+                <button>Register</button>
+            </form>
+        </div>
+    )
+}

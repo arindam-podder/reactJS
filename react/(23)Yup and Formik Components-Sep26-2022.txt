@@ -1,0 +1,287 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTI4MzMzOTYwMTMw/details
+
+
+Formik
+                                        Yup
+- It is a library that provides pre-defined validation schemas.
+- It comprises of built-in valdiation functions.
+
+            min()
+            max()
+            required()
+            matches() etc..
+
+- It also provides functions for verifying data type
+           
+            string()
+            number()
+            boolean() etc..
+
+- Install Yup library for project
+
+        > npm install yup --save
+
+- Import all validation schemas from yup.
+
+Syntax: Import individual schemas
+
+    import   number, string, required from 'yup';
+
+Syntax: Import all schemas
+
+    import  * as yup from  'yup';
+
+- Configure validationSchema for formik.
+
+        const  formik = useFormik({
+            initialValues :  {  },
+            validationSchema : yup.object({
+                  FieldName: yup.string()
+                                       .required("Error Message")
+                                      .min(4, "ErrorMessage")
+                                      .max(10, "ErrorMessage")
+                                 
+             })
+        })
+
+- Formik with yup can bind the validation schema and initial values to any field by using
+
+            { ...formik.getFieldProps("FieldName") }
+
+Syntax:
+    <input type="text"  name="FieldName"  {...formik.getFieldProps("FieldName")} />
+
+
+Ex:
+YupValidation.js
+
+
+import { FormikProvider, useFormik } from "formik";
+import * as yup from "yup";
+
+export function YupValidation(){
+
+    const formik = useFormik({
+        initialValues: {
+            UserName: '',
+            Age:'',
+            Mobile: ''
+        },
+        validationSchema :  yup.object({
+            UserName: yup.string()
+                         .required("User Name Required")
+                         .min(4,"Name too short..")
+                         .max(10,"Name too long.."),
+            Age: yup.number()
+                    .required("Age Required"),
+            Mobile : yup.string()
+                        .matches(/\+91\d{10}/,"Invalid Mobile")
+                        .required("Mobile Required")
+        }),
+        onSubmit : (values)=>{
+            alert(JSON.stringify(values));
+        }
+    })
+    return(
+        <div className="container-fluid">
+           <form onSubmit={formik.handleSubmit}>
+              <h2>Register User</h2>
+              <dl>
+                <dt>User Name</dt>
+                <dd><input name="UserName" {...formik.getFieldProps("UserName")} type="text"/></dd>
+                <dd className="text-danger">{formik.errors.UserName}</dd>
+                <dt>Age</dt>
+                <dd><input name="Age" {...formik.getFieldProps("Age")} type="text"/></dd>
+                <dd className="text-danger">{formik.errors.Age}</dd>
+                <dt>Mobile</dt>
+                <dd><input name="Mobile" {...formik.getFieldProps("Mobile")} type="text"/></dd>
+                <dd className="text-danger">{formik.errors.Mobile}</dd>
+              </dl>
+              <button>Register</button>
+           </form>
+        </div>
+    )
+}
+
+                            Formik Components
+
+- Formik provides built-in components for form and fields.
+- These components have built-in validation properties that make binding easy.
+- It makes clean separation of UI and logic.
+- Formik provides the following components
+
+        <Formik>                It is a container for form.
+        <Form>                    It is a container for fields
+        <Field>                    It configures a field and binds values
+        <ErrorMessage>        It configures error message.
+
+Syntax:
+        <Formik  initialValue={}  validationSchema={} onSubmit={}>
+            <Form>
+                  <Field  name="FieldName" type="text" />
+                  <Errormessage name="FieldName" />
+            </Form>
+        </Formik>
+
+    type        : text, number, email, url, password, checkbox, radio
+    as            : select, textarea
+
+        <Field type="password">    => <input type="password" />
+        <Field as="select">
+          <option> </option>
+          <option> </option>
+        </Field>
+        <ErrorMessage  name="FieldName">
+
+Ex: ValidationComponent.js
+
+import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
+import { useState } from "react";
+import * as yup from "yup";
+
+export function ValidationComponent(){
+    const [cityError, setCityError] = useState('');
+    function CityChange(e){
+       if(e.target.value=="-1"){
+        setCityError("Please Select Your City");
+       } else {
+        setCityError("");
+       }
+    }
+    return(
+        <div className="container-fluid">
+            <Formik
+              initialValues={
+                {
+                    UserName: '',
+                    Age: '',
+                    Mobile: '',
+                    City: ''
+                }
+              }
+              validationSchema= {
+                yup.object({
+                    UserName: yup.string().required("User Name Required").min(4,"Name too short").max(10,"Name too Long"),
+                    Age: yup.number().required("Age Required"),
+                    Mobile: yup.string().matches(/\+91\d{10}/,"Invalid Mobile").required("Mobile Required"),
+
+                })
+              }
+              onSubmit = {
+                (values)=> {
+                    alert(JSON.stringify(values));
+                }
+              }
+            >
+                {
+                    <Form>
+                        <h2>Register New User</h2>
+                        <dl>
+                            <dt>User Name</dt>
+                            <dd><Field type="text" name="UserName" /></dd>
+                            <dd className="text-danger"><ErrorMessage name="UserName" /></dd>
+                            <dt>Age</dt>
+                            <dd><Field type="text" name="Age" /></dd>
+                            <dd className="text-danger"><ErrorMessage name="Age"/></dd>
+                            <dt>Mobile</dt>
+                            <dd><Field type="text" name="Mobile" /></dd>
+                            <dd className="text-danger"><ErrorMessage name="Mobile"/></dd>
+                            <dt>City</dt>
+                            <dd>
+                                <select onChange={CityChange} name="City">
+                                    <option value="-1">Select Your City</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Hyd">Hyd</option>
+                                </select>
+                            </dd>
+                            <dd className="text-danger">{cityError}</dd>
+                        </dl>
+                        <button>Register</button>
+                    </Form>
+                }
+
+            </Formik>
+        </div>
+    )
+}
+
+                                Validation Services
+isValid
+isTouched
+
+Syntax:
+          props => <Form>  </Form>
+       
+          props.isValid
+
+Ex:
+import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
+import { useState } from "react";
+import * as yup from "yup";
+
+export function ValidationComponent(){
+    const [cityError, setCityError] = useState('');
+    function CityChange(e){
+       if(e.target.value=="-1"){
+        setCityError("Please Select Your City");
+       } else {
+        setCityError("");
+       }
+    }
+    return(
+        <div className="container-fluid">
+            <Formik
+              initialValues={
+                {
+                    UserName: '',
+                    Age: '',
+                    Mobile: '',
+                    City: ''
+                }
+              }
+              validationSchema= {
+                yup.object({
+                    UserName: yup.string().required("User Name Required").min(4,"Name too short").max(10,"Name too Long"),
+                    Age: yup.number().required("Age Required"),
+                    Mobile: yup.string().matches(/\+91\d{10}/,"Invalid Mobile").required("Mobile Required"),
+
+                })
+              }
+              onSubmit = {
+                (values)=> {
+                    alert(JSON.stringify(values));
+                }
+              }
+            >
+                {
+                    props =>
+                    <Form>
+                        <h2>Register New User</h2>
+                        <dl>
+                            <dt>User Name</dt>
+                            <dd><Field type="text" name="UserName" /></dd>
+                            <dd className="text-danger"><ErrorMessage name="UserName" /></dd>
+                            <dt>Age</dt>
+                            <dd><Field type="text" name="Age" /></dd>
+                            <dd className="text-danger"><ErrorMessage name="Age"/></dd>
+                            <dt>Mobile</dt>
+                            <dd><Field type="text" name="Mobile" /></dd>
+                            <dd className="text-danger"><ErrorMessage name="Mobile"/></dd>
+                            <dt>City</dt>
+                            <dd>
+                                <select onChange={CityChange} name="City">
+                                    <option value="-1">Select Your City</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Hyd">Hyd</option>
+                                </select>
+                            </dd>
+                            <dd className="text-danger">{cityError}</dd>
+                        </dl>
+                        <button disabled={(props.isValid)?false:true} >Register</button>
+                    </Form>
+                }
+
+            </Formik>
+        </div>
+    )
+}
