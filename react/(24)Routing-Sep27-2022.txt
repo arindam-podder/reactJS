@@ -1,0 +1,122 @@
+
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTUwMzE5ODI2ODE4/details
+
+
+Routing in React
+- Web application have to deal with various objects and techniques
+- Various Objects
+        a) Request
+        b) Response
+        c) Session
+        d) Application
+        e) Cookie
+- Various Techniques
+        a) Data Binding
+        b) Style Binding
+        c) Class Binding
+        d) Model Binding [Name and Location Mapping]
+        e) Routing
+        f) Caching [Save Round Trip] etc..
+
+- Routing is a technique used in web applications to configure user and SEO friendly URL's.
+
+- User friendly URL can allow to query any content directly from URL.
+
+Without Routing:
+ http://www.amazon.in/electronics.php?category=mobiles&model=lg
+
+With Routing
+ http://www.amazon.in/electronics/mobiles/lg
+
+- SEO friendly URL allows crawlers to know the exact location of user on page.
+
+- Routing can be Server side or Client Side
+
+- Server Side Application and API can use routing
+
+  http://fakestoreapi.com/products/1
+  http://fakestoreapi.com/products?id=1
+
+- React uses client side routing.
+
+- Client side routing enables SPA [Single Page Application]
+  environment.
+
+- SPA allows the user to stay to on one page and get
+  acess to everything on to the page.
+
+- Routing uses implicitly Ajax
+
+- Routing allows to load new content into page without reloading the page.
+
+- React provides a routing library "react-router-dom", which enables SPA environment.
+
+- React routing library current active versions are
+        a) Version-5  [upto react 17]
+        b) Version-6  [from react 18]
+
+- Routing library is backward compatible
+        React 18 => can use V5 & V6
+
+- Lot of changes are made in new Version of route.
+
+- "react-router-dom" library provides following components
+
+    <BrowserRouter>        It configures routing that maps virtual DOM
+                                to the actual DOM.
+    <Routes>                It is used to configure a Route Table.
+                                Route Table comprises of collection of routes.
+    <Route>                    It configures path and component.            
+    <Link>                    It is used for navigation.
+                                <a> can't be used for route path.
+    <Outlet>                    It specifies the target location where the
+                                result is rendered.
+
+- "react-router-dom" library provides following Hooks
+
+     useNavigate
+     useParams
+     useSearchParams
+     useLocation
+     useHistory  etc..
+
+Syntax:
+        <BrowserRouter>
+            <Routes>
+                <Route path="/"  element={ <Component /> } />
+                <Route path="/login" element={ <Login /> } />
+            </Routes>
+        </BrowserRouter>
+
+Ex:
+Tutorial.js
+
+
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+
+
+export function Tutorial(){
+    return(
+        <div className="container-fluid">
+          <h2>Web Technologies - Tutorial</h2>
+          <BrowserRouter>
+             <nav>
+                <span> <Link to="html">HTML</Link> </span>
+                <span>|</span>
+                <span> <Link to="css">CSS</Link> </span>
+                <span>|</span>
+                <span> <Link to="react">React</Link> </span>
+             </nav>
+             <hr />
+             <section>
+                <Routes>
+                    <Route path="/html" element={<div><h2>HTML</h2><p>It is a markup language.</p></div>} />
+                    <Route path="/css" element={<div><h2>CSS</h2><p>It defines styles form HTML.</p></div>} />
+                    <Route path="/react" element={<div><h2>React</h2><p>It is a JavaScript library.</p></div>} />
+                    <Route path="/" element={<div><p>Browse our online tutorials</p></div>} />
+                </Routes>
+             </section>
+          </BrowserRouter>
+        </div>
+    )
+}
