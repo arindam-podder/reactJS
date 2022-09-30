@@ -1,0 +1,61 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTUxMTc2NzIwMzQw/details
+
+
+Route
+Route Parameters
+Gaurd Routes
+- You can restrict the route path from access.
+- Only authorized users can access the path.
+- Cookies are used for authorization.
+
+                               Cookies
+- Cookie is a simple text document.
+- It store the client authentication details on client machine.
+- It provides access to various resources by providing the client details to server when ever required.
+- JavaScript provides "navigator" object with "cookieEnabled" property, which verifies the cookie status in browser.
+            BOM
+            window, history, navigator, location, document
+- Cookies are classified into 2 types
+    a) In-memory cookie  [Temporary - Browser Memory]
+    b) Persistent cookie   [Permanent - Client HDD]
+
+- React can use cookies for Gaurding your Routes.
+- React have to depend on various 3rd party libraries.
+
+Setup Application for Cookies
+1. Install cookie library
+    > npm install react-cookie --save
+
+2. Cookie is a provided as a service.
+     - Service is a pre-defined business logic.
+    - Service uses "Single Ton" pattern.
+    - Service follows "Dependency Injection" mechanism.
+    - DI uses 2 components
+        a) Provider
+        b) Injector
+    - Provider is reponsible for locating the value in memory.
+    - Injector is responsible to injecting the value into component.
+    - You have to configure cookie provider at application level.
+
+                index.js
+    import  { CookiesProviders } from  'react-cookie';
+
+    <CookieProvider>
+       <YourIndexComponent />
+    </CookieProvider>
+
+3. Create cookie from any component
+
+    import  { useCookies }  from  'react-cookie';
+
+    const [cookies, setCookie, removeCookie] = useCookies();
+
+    setCookie("Name", "Value", { expiry:date });
+
+4. Access Cookie to verify authentication
+
+    cookies[Name]
+
+5. Remove Cookie
+
+    removeCookie(Name);

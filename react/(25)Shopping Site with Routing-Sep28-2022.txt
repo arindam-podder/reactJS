@@ -1,0 +1,47 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTAxOTYyNDMzODIy/details
+
+
+Route Components
+<BrowserRouter>
+<Routes>
+<Route>
+<Link>
+<Outlet>
+
+Route Path
+<Route path="/"  element={ }>                 Default
+<Route path="*"  element={}>                 Not Found
+<Route path="/home" element={}>        Specific
+
+Element
+- It can be markup - inline template
+- It can be component - external template
+
+Syntax:
+    <Route  path="/"  element={<div> </div>} />
+    <Route  path="/"  element={ <Component/> }
+
+    <Link  to="home">            Relative            =>  electronics/home
+    <Link  to="/home">            Absolute            =>  /home
+
+Route Parameters
+- You can transport data from one component to another component by using parameters.
+- Route parameters are configured by using following syntax
+
+    <Route  path="/products/:category"  element={ } />
+
+        http://localhost:3000/products/men
+
+            Parameter Name    : category
+            Parameter Value    : men
+
+    <Route path="/product/:id/:name/:price">
+
+- Route parameters are accessed from any component by using
+            "useParams()"  hook
+
+            const [params] = useParams();        { key:value }
+
+            params.category
+            params.id
+            params.name
