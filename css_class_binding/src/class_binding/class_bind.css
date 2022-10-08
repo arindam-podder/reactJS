@@ -1,0 +1,23 @@
+.full-page-height{
+    height: 660px;
+}
+
+.dark{
+    background-color: rgb(60 57 57);
+    color: white;
+    padding: 10px;
+    border: 1px solid rgb(60 57 57);
+}
+
+.non-dark {
+    padding: 10px;
+    border: 1px solid rgb(60 57 57);
+}
+
+.nameError {
+    color: red;
+}
+
+.nameSuccess{
+    color: green;
+}
