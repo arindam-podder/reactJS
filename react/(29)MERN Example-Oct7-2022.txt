@@ -1,0 +1,139 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU1MDgwNDAwNDc5/details
+
+
+MongoDB        Database
+Express            Middleware
+React                Front End
+Node JS            Server Side
+
+                                  MongoDB
+- Install MongoDB
+- Create Database        : reactdb
+- Create Collection        : customers
+
+CRUD Commands:
+
+Read:         db.collection.find({query})     => select * from table
+Insert:      db.collection.insertOne({data})
+             db.collection.insertMany([{},{}])
+
+Update:     db.collection.updateOne({findQuery},{setOperator})
+Delete :    db.collection.deleteOne({findQuery})
+
+                               Server Side API
+Distributed Computing
+
+- Distributed computing is an architecture that allows 2 applications running on 2 different machines to share information.
+                                (or)
+- It is also about 2 applications running on same machine in 2 different process to share information.
+
+- There are various distributed computing technologies
+
+    CORBA        - Common Object Request Broken Architecture
+    DCOM        - Distributed Component Object Model
+    RMI            - Remote Method Invocations
+    EJB            - Enterprise Java Beans
+    Webservices
+    Remoting
+
+- Web Service Specifications [How they communicate]
+
+a) SOAP
+b) REST
+c) JSON
+
+SOAP
+- Service Oriented Architecture Protocol
+- Consumer makes XML request.
+- Provider sends XML response.
+
+REST
+- Representational State Transfer
+- Consumer makes a simple Query request.
+- Provider sends XML response, optionally JSON.
+
+JSON
+- JavaScript Object Notation
+- Consumer make JSON request
+- Provides sends JSON response
+
+- API is an alternative for webservice
+- It uses JSON
+- It can also use REST
+- Compatible
+- Data must reach any device
+
+
+                            Create Server Side API
+- Node JS
+- Express
+- Install the following libraries in your project
+
+    > npm install mongodb  --save
+    > npm install express --save
+    > npm install cors  --save
+
+- MongoDB library provides set of classes that are responsible for
+  communicating with mongodb database in the back-end.
+
+- Express is a framework that provides various libraries in order to
+  handle communication between client and server.
+        a) for creating API
+        b) for parsing data
+        b) for serving static files etc..
+
+- CORS [Cross Origin Resourse Sharing] is required to
+  enable data transfering from one device to another.
+
+HTML:
+ <img  src="http://..."  crossorigin="use-credentials/anonymous" >
+ <Link>
+ <style>
+ <script>
+
+
+Ex:
+1. Open Your React APP
+2. Install following libraries
+
+
+    > npm install mongodb  --save
+    > npm install express --save
+    > npm install cors  --save
+
+3. Create a server side App [API] in Node JS [JavaScript File]
+
+                api.js
+
+var mongoClient = require("mongodb").MongoClient;
+var express = require("express");
+var cors = require("cors");
+
+var app = express();
+
+app.get("/",(req, res)=>{
+   res.send("<h2>Welcome to Web API</h2>");
+});
+
+app.get("/customers",(req,res)=>{
+    mongoClient.connect("mongodb://127.0.0.1:27017",(err, clientObject)=>{
+        if(!err){
+           var database = clientObject.db("reactdb");
+           database.collection("customers").find({}).toArray((err, documents)=>{
+                if(!err){
+                    res.send(documents);
+                }
+           })
+        } else {
+            console.log(err);
+        }
+    })
+})
+
+app.listen(4000);
+console.log(`Server Started : http://127.0.0.1:4000`);
+
+> node  api.js
+
+ http://localhost:4000                  => Welcome
+ http://localhost:4000/customers        => JSON customers
