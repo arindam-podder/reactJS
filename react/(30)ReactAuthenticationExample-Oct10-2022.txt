@@ -1,0 +1,347 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU1NTMwMzE5NzAx/details
+
+
+MERN Stack
+
+Created Database on MongoDB
+--------------------------------------------
+
+Database Name:  reactdb
+Collection         :  categories
+                        UserId, UserName, Password, Email, Mobile
+
+
+Created API using Node and Express
+-----------------------------------------------------
+
+GET        /customers                    : returns all customers
+POST        /registercustomer            : adds a new customer into database
+
+>npm install mongodb --save
+>npm install express --save
+>npm install cors --save
+   
+                                api.js
+
+var mongoClient = require("mongodb").MongoClient;
+var express = require("express");
+var cors = require("cors");
+
+var app = express();
+
+app.use(express.urlencoded({
+    extended:true
+}));
+app.use(express.json());
+app.use(cors());
+
+app.get("/",(req, res)=>{
+   res.send("<h2>Welcome to Web API</h2>");
+});
+
+app.get("/customers",(req,res)=>{
+    mongoClient.connect("mongodb://127.0.0.1:27017",(err, clientObject)=>{
+        if(!err){
+           var database = clientObject.db("reactdb");
+           database.collection("customers").find({}).toArray((err, documents)=>{
+                if(!err){
+                    res.send(documents);
+                }
+           })
+        } else {
+            console.log(err);
+        }
+    })
+});
+
+app.post("/registercustomer",(req, res)=>{
+    var customerDetails = {
+        UserId: req.body.UserId,
+        UserName: req.body.UserName,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Mobile: req.body.Mobile
+    }
+    mongoClient.connect("mongodb://127.0.0.1:27017",(err,clientObject)=>{
+        if(!err){
+            var database = clientObject.db("reactdb");
+            database.collection("customers").insertOne(customerDetails,(err, result)=>{
+                if(!err) {
+                    console.log("Record Inserted");
+                    res.redirect("/customers");
+                }
+            })
+        }
+    })
+});
+
+app.listen(4000);
+console.log(`Server Started : http://127.0.0.1:4000`);
+
+> node api.js
+   http://localhost:4000
+
+                        Consuming API in React App
+                        ----------------------------------------
+1. Add a new folder
+        "ishop"
+
+2. Add following components into folder
+
+        IshopIndex.js
+        IshopHome.js
+        IshopLogin.js
+        IshopRegister.js
+        IshopCategories.js
+        IshopError.js
+
+3. IshopIndex.js
+
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { IshopCategories } from "./IshopCategories";
+import { IshopError } from "./IshopError";
+import { IshopHome } from "./IshopHome";
+import { IshopLogin } from "./IshopLogin";
+import { IshopRegister } from "./IshopRegister";
+
+
+export function IshopIndex(){
+    return(
+        <div className="container-fluid">
+            <BrowserRouter>
+            <header className="bg-dark text-white text-center p-2">
+                <h2><span className="bi bi-cart4"></span> IShop - Smart Shopping</h2>
+            </header>
+            <section className="row mt-3">
+               <nav className="col-3">
+                  <Link className="btn btn-dark mb-2 w-100" to="/home">Home</Link>
+                  <Link className="btn btn-dark mb-2 w-100" to="/login">Login</Link>
+                  <Link className="btn btn-dark mb-2 w-100" to="/register">Register</Link>
+                  <Link className="btn btn-dark mb-2 w-100" to="/categories">Categories</Link>
+               </nav>
+               <main className="col-9">
+                  <Routes>
+                     <Route  path="/" element={<IshopHome/>} />
+                     <Route path="/home" element={<IshopHome/>} />
+                     <Route path="/login" element={<IshopLogin />} />
+                     <Route path="/register" element={<IshopRegister />} />
+                     <Route path="/categories" element={<IshopCategories />} />
+                     <Route path="/error" element={<IshopError/>} />
+                  </Routes>
+               </main>
+            </section>
+            </BrowserRouter>
+        </div>
+    )
+}
+
+4. IshopHome.js
+
+import { Link } from "react-router-dom";
+
+
+export function IshopHome(){
+    return(
+        <div>
+            <h2>Shopping Home</h2>
+            <span><Link to="/register">New User Register</Link></span>
+            <span>|</span>
+            <span><Link to="/login">Existing User Login</Link></span>
+        </div>
+    )
+}
+
+5. IshopRegister.js
+
+import { useFormik } from "formik";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+
+export function IshopRegister(){
+
+    const [customers, setCustomers] = useState([]);
+    const [userError, setUserError] = useState('');
+    const [isUserValid, setUserValid] = useState(false);
+
+    const navigatge = useNavigate();
+
+    const formik = useFormik({
+        initialValues: {
+            UserId: '',
+            UserName:'',
+            Password:'',
+            Email: '',
+            Mobile: ''
+        },
+        onSubmit: (values)=>{
+            axios.post("http://localhost:4000/registercustomer",values);
+            alert("Registered Successfully..");
+            navigatge("/login");
+        }
+    });
+    useEffect(()=>{
+        axios.get("http://localhost:4000/customers&quot;)
+        .then((response)=>{
+            setCustomers(response.data);
+        })
+    },[]);
+
+    function VerifyUserId(e){
+        for(var customer of customers){
+            if(customer.UserId==e.target.value){
+                setUserError("User Id Taken - Try Another");
+                setUserValid(false);
+                break;
+            } else {
+                setUserError("User Name Available");
+                setUserValid(true);
+            }
+        }
+    }
+
+    return(
+        <div>
+            <h2>Customer Register</h2>
+            <form onSubmit={formik.handleSubmit}>
+              <dl>
+                <dt>User Id</dt>
+                <dd><input type="text" onKeyUp={VerifyUserId} name="UserId" value={formik.values.UserId} onChange={formik.handleChange} /></dd>
+                <dd className={(isUserValid==true)?'text-success':'text-danger'} >{userError}</dd>
+                <dt>User Name</dt>
+                <dd><input type="text" name="UserName" value={formik.values.UserName} onChange={formik.handleChange} /></dd>
+                <dt>Password</dt>
+                <dd><input type="password" name="Password" value={formik.values.Password} onChange={formik.handleChange} /></dd>
+                <dt>Email</dt>
+                <dd><input type="email" name="Email" value={formik.values.Email} onChange={formik.handleChange} /></dd>
+                <dt>Mobile</dt>
+                <dd><input type="text" name="Mobile" value={formik.values.Mobile} onChange={formik.handleChange} /></dd>
+              </dl>
+              <button className="btn btn-primary">Register</button>
+            </form>
+            <p>
+                <Link to="/login">Existing User?</Link>
+            </p>
+        </div>
+    )
+}
+
+6. IshopLogin.js
+
+import { useFormik } from "formik";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import  { useCookies } from 'react-cookie';
+import { useEffect } from "react";
+
+export function IshopLogin(){
+
+    const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const formik = useFormik({
+        initialValues: {
+            UserId:"",
+            Password:""
+        },
+        onSubmit: (values)=>{
+            axios.get("http://localhost:4000/customers&quot;)
+            .then(response=>{
+                for(var customer of response.data){
+                    if(customer.UserId==values.UserId && customer.Password==values.Password) {
+                        setCookie("userid", values.UserId);
+                        navigate("/categories");
+                        break;
+                    } else {
+                        navigate("/error");
+                    }
+                }
+            })
+        }
+    })
+
+    useEffect(()=>{
+        if(cookies["userid"]) {
+            navigate("/categories");
+        }
+    },[])
+    return(
+        <div>
+            <h2>Customer Login</h2>
+            <form onSubmit={formik.handleSubmit}>
+                <dl>
+                    <dt>User Id</dt>
+                    <dd><input name="UserId" onChange={formik.handleChange} value={formik.values.UserId} type="text"/></dd>
+                    <dt>Password</dt>
+                    <dd><input name="Password" onChange={formik.handleChange} value={formik.values.Password} type="password"/></dd>
+                </dl>
+                <button className="btn btn-primary">Login</button>
+            </form>
+            <p>
+                <Link to="/register">New User?</Link>
+            </p>
+        </div>
+    )
+}
+
+7. IshopCategories.js
+
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+
+export function IshopCategories(){
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const [UserId, setUserId] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(cookies["userid"]==undefined){
+            navigate("/login");
+        } else {
+            setUserId(cookies["userid"]);
+        }
+    },[]);
+
+    function Signout(){
+        removeCookie("userid");
+        navigate("/login");
+    }
+
+    return(
+        <div>
+            <h2>Shop Categories   -  Hello ! {UserId} | <button onClick={Signout} className='btn btn-link'>Signout</button> </h2>
+        </div>
+    )
+}
+
+8. IshopError.js
+
+import { Link } from "react-router-dom";
+
+export function IshopError(){
+    return(
+        <div>
+            <h2 className="text-danger">Invalid UserId / Password</h2>
+            <Link to="/login">Try Again</Link>
+        </div>
+    )
+}
+
+
+
+
+       
+                                 CRUD Operations
+                                 --------------------------
+1. Create collection in MongoDB
+
+        collection name    : products
+        fields                    : ProductId, Name, Price, Rating
+
+2. Create an API for handling all CRUD operations
+
+        find({})                        all
+        find({Id:1})                    equal
+        find({Price:{$gt:5000}})
