@@ -1,0 +1,167 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTI4NzM1NTM5NzQx/details
+
+
+Material UI for React
+
+- It is a component library built by React community for React.
+- Bootstrap is also component library but not built for react, It uses lot of jQuery.
+- Developers can also use various other 3rd party component libraries like: Telerik, DevExpress, Twitter Bootstrap etc..
+
+- The official repository is "mui.com".
+
+Step-1:
+ - Download and Install Material UI library for your project
+ 
+        >npm install @mui/material  --save
+
+ - React 17+ versions material UI is using a new dependency called
+   "emotions". You have to install emotions dependencies.
+
+          > npm install @emotion/react --save
+        > npm install @emotion/styled --save
+
+Step-2
+ - React Material component library is using fonts and icons from Google API's.
+ - You can use CDN links for install in your project
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap&quot;
+/>
+
+- You have to embed in "index.html"
+
+- Install Material Icons or use CDN
+
+   > npm install @mui/icons-material
+
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons&quot;
+/>
+
+
+Summary
+- Install  @mui/material  @emotion/react  @emotion/styled
+- Link Google Fonts from CDN
+- Install MUI icons
+
+
+FAQ: What are web safe fonts?
+Ans:  serif, sans-serif, monospace
+
+Note: React and Bootstrap are using a font called "Roboto"
+
+FAQ: What are the image types supported?
+Ans :      
+        APNG
+        PNG
+        JPG
+        JPEG
+        JFIF
+        GIF
+        ICO
+        Webp
+        SVG
+        TIFF
+        BMP
+
+FAQ: What is the image in XML format?
+Ans :  SVG
+
+
+
+How to use components?
+- You have to get the function or class name of component.
+- You have to import the class or function into your component.
+
+Ex: Button Component
+
+ import  { Button, Card }  from "@mui/material";    // Eager loading
+ 
+                               ( or )
+
+ import  Button from  "@mui/material/Button";       // Lazy Loading
+
+
+- You have to embed component by using its selector
+
+            <Button> </Button>
+
+- Every component comprises of "Props", you have to get the information about Props from official API of component.
+
+Ex:
+        variant  :  "contained | outlined|... "
+        color       :  "success| primary"
+        size       :  "large | medium"
+
+- Event for every component is same as Synthetic Events.
+        onClick
+        onChange etc..
+
+
+        <Button  onClick={handleButtonClick}>  
+
+Ex:
+MaterialDemo.js
+
+import Button from "@mui/material/Button";
+
+export function MaterialDemo(){
+    function RegisterClick(){
+        alert("Registered Successfully..");
+    }
+    return(
+        <div className="container-fluid">
+           <h2>Bootstrap Button</h2>
+           <button className="btn btn-primary">Register</button>
+           <h2>Material Button</h2>
+           <Button onClick={RegisterClick} variant="contained" color="success" >Register</Button>
+        </div>
+    )
+}
+
+
+Ex: Card
+
+import { Card, CardContent, CardMedia } from "@mui/material";
+import Button from "@mui/material/Button";
+import { useEffect } from "react";
+import { useState } from "react";
+
+export function MaterialDemo(){
+   
+    const [products, setProducts] = useState([]);
+
+    useEffect(()=>{
+        fetch("http://fakestoreapi.com/products&quot;)
+        .then(response=>response.json())
+        .then(data=>{
+            setProducts(data);
+        })
+    },[]);
+
+    return(
+        <div className="container-fluid">
+            <h2>Products Catalog</h2>
+            <div className="d-flex flex-wrap">
+                {
+                    products.map(product=>
+                        <Card style={{width:'200px', margin:'20px', padding:'10px'}}>
+                          <CardMedia
+                            component="img"
+                            height="150"
+                            image={product.image}
+                            alt={product.price}
+                            />
+                            <CardContent>
+                                <p>{product.title}</p>
+                            </CardContent>
+                        </Card>
+                        )
+                }
+            </div>
+        </div>
+    )
+}
