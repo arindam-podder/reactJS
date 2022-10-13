@@ -1,0 +1,113 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU2MzY0MDg5NDA3/details
+
+
+React Hooks
+
+- Component Life Cycle Hooks are only for Class Component, you can't use in Function Component.
+
+- React 17+ versions introduced Hooks into "Function Components".
+
+- Hooks are only for Function Component, you can't use them in Class Component.
+
+- Technically Hook is a function that returns a value or any specified funcitonality.
+
+- React allows to create custom hooks.
+
+- React provides several pre-defined hooks.
+
+        useState
+        useEffect
+        useContext
+        useReducer
+        useReference etc..
+
+1. useState
+ - It configures state for function component.
+ - State holds the data and makes it available for component.
+ 
+Syntax:
+            const [getter, setter ] = useState(any);
+
+            any  => Any JavaScript Data Type
+
+2. useEffect
+- It configures the actions to perform on mount and unmount.
+- It can mount component again based on "dependencies".
+
+Syntax:
+        useEffect(()=>{
+            // actions to perform on mount
+            return(()=>{
+                // actions on unmount
+            })
+         },[dependencies])
+
+FAQ: Which pattern useEffect follows?
+Ans:  Single Call
+
+Ex:
+import { useState } from "react";
+import { useEffect } from "react"
+
+export function SuccessComponent(){
+    useEffect(()=>{
+        alert("Success Component Requested");
+        return(()=>{
+            alert("Success Component will unmount");
+        })
+    },[]);
+    return(
+        <h2>Login Success..</h2>
+    )
+}
+
+export function ErrorComponent(){
+
+    useEffect(()=>{
+        alert("Error Component Requested");
+        return(()=>{
+            alert("Error Component will unmount");
+        })
+    },[]);
+
+    return(
+        <h2>Invalid Credentials</h2>
+    )
+}
+
+export function HooksDemo(){
+
+    const [msg, setMsg] = useState();
+
+    function LoginClick(){
+        var username = "john";
+        if(username=="john"){
+            setMsg(<SuccessComponent/>)
+        } else {
+            setMsg(<ErrorComponent />)
+        }
+    }
+
+    return(
+        <div className="container-fluid">  
+            <h2>Hooks Demo</h2>
+            <button onClick={LoginClick}>Login</button>
+            <p>{msg}</p>
+        </div>
+    )
+}
+
+FAQ: What is Conditional Rendering in React?
+Ans :  It is the process of rendering various components using decision making.
+
+3. useContext
+- It configures Context memory.
+- Context refers to memory allocate for a component.
+- Data can be stored in context memory and can be shared to other components that run within the context of parent component.
+- Context uses DI mechanism.
+- According to DI pattern context is managed by 2 components
+        a) Provider
+        b) Injector
+
+- Provider locates data in memory.
+- Injector injects the data into component.
