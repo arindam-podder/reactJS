@@ -1,0 +1,150 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU1NzkzMTU3NjYy/details
+
+
+MongoDB CRUD Commands
+
+1. find({})            : It is to read document from collection.
+
+    {field:value}                    Equal to
+    {field:{$gt:value}}            greater than
+    {field:{$gte:value}}            >=
+    {field:{$lt:value}}            <
+    {field:{$lte:value}}            <=
+    {field:{$ne:value}}            !=
+
+    Ex:   products.find({Price:{$gt:5000}})
+
+2. insertOne({})        : It is to insert a new document into collection.
+    insertMany([{},{}])
+
+3. updateOne({findquery},{updatequery}) : It is to update a document
+
+    Ex:
+    products.find({ProductId:1},{$set:{Price:56000}})
+    updateMany()
+
+4. deleteOne({findquery})    : It is to delete document.
+    deleteMany({findquery})
+
+    ex:
+    products.deleteOne({ProductId:1})
+
+API Methods
+------------------
+
+GET                /products                returns all products
+GET                /details/1                return any specific product by id
+POST                /addproduct            adding a new product
+PUT                /updateproduct/1    updates existing product details
+DELETE            /deleteproduct/1    deletes the specified product
+
+API URL:
+    http://localhost:4000
+
+
+API Code:
+                            productapi.js
+
+var mongoClient = require("mongodb").MongoClient;
+var express =require("express");
+var cors = require("cors");
+
+var conString = "mongodb://localhost:27017";
+
+var app = express();
+app.use(express.urlencoded({
+    extended:true
+}));
+app.use(express.json());
+app.use(cors());
+
+
+//Read
+app.get("/products",(req, res)=>{
+     mongoClient.connect(conString,(err, clientObject)=>{
+        if(!err) {
+            var database = clientObject.db("reactdb");
+            database.collection("products").find({}).toArray((err,documents)=>{
+                if(!err){
+                    res.send(documents);
+                    res.end();
+                }
+            })
+        }
+     })
+});
+
+app.get("/details/:id", (req, res)=>{
+
+    var id = parseInt(req.params.id)
+
+    mongoClient.connect(conString,(err, clientObject)=>{
+        if(!err){
+            var database = clientObject.db("reactdb");
+            database.collection("products").find({ProductId:id}).toArray((err, documents)=>{
+                if(!err){
+                    res.send(documents);
+                }
+            })
+        }
+    })
+});
+
+//Create
+app.post("/addproduct",(req, res)=>{
+    var product = {
+        ProductId: parseInt(req.body.ProductId),
+        Name: req.body.Name,
+        Price: parseFloat(req.body.Price),
+        Rating: parseFloat(req.body.Rating)
+    };
+    mongoClient.connect(conString,(err, clientObject)=>{
+        if(!err){
+            var database = clientObject.db("reactdb");
+            database.collection("products").insertOne(product,(err,result)=>{
+                if(!err){
+                    console.log("Record Inserted");
+                    res.redirect("/products");
+                } else {
+                    console.log(err);
+                }
+            })
+        }
+    })
+});
+
+//Update
+
+app.put("/updateproduct/:id",(req,res)=>{
+    var id = parseInt(req.params.id);
+    mongoClient.connect(conString,(err, clientObject)=>{
+        if(!err){
+            var database = clientObject.db("reactdb");
+            database.collection("products").updateOne({ProductId:id},{$set:{Name:req.body.Name, Price:parseFloat(req.body.Price), Rating:parseInt(req.body.Rating)}},(err, result)=>{
+                if(!err){
+                    console.log("Record Updated");
+                    res.redirect("/products");
+                }
+            })
+        }
+    })
+});
+
+// Delete
+app.delete("/deleteproduct/:id",(req, res)=>{
+    var id = parseInt(req.params.id);
+    mongoClient.connect(conString,(err, clientObject)=>{
+        if(!err){
+            var database = clientObject.db("reactdb");
+            database.collection("products").deleteOne({ProductId:id},(err, result)=>{
+                if(!err) {
+                    console.log("Record Deleted");
+                    res.redirect("/products");
+                }
+            })
+        }
+    })
+});
+
+app.listen(4000);
+console.log("Server Started : http://localhost:4000&quot;);

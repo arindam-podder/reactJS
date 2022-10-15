@@ -1,0 +1,38 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTAyOTYyMTk1OTIz/details
+
+import React from "react";
+import {useContext} from "react";
+
+let userDetailsContext = React.createContext(null);
+
+export function ContextDemo()
+{
+    return(
+        <div className="container-fluid bg-dark text-white p-2">
+           <userDetailsContext.Provider value={{UserName:"John"}}>
+            <h2>Context Demo Index</h2>
+            <Section />
+           </userDetailsContext.Provider>
+        </div>
+    )
+}
+
+export function Section(){
+    const userdetails = useContext(userDetailsContext);
+    return(
+        <div className="m-3 p-3 bg-warning">
+            <h3>Section Component - {userdetails.UserName}</h3>
+            <MainComponent />
+        </div>
+    )
+}
+
+export function MainComponent()
+{
+    const userdetails = useContext(userDetailsContext);
+    return(
+        <div className="m-3 p-3 bg-primary">
+            <h4>Main Component - {userdetails.UserName}</h4>
+        </div>  
+    )
+}

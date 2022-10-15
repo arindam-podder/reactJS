@@ -1,0 +1,109 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU2ODY1NzkwODc2/details
+
+
+Hooks in React
+- useState
+- useEffect
+- useContext
+- useReducer
+                               
+What are the various state management techniques in Web Application?
+- Cookies
+- Query String
+- Session        
+- Application
+- Context
+- Hidden
+
+Session State :  It can store data and make it available from session start
+                      to session end.
+
+Application State: It can store data centrally for application and make it available
+                        across components.
+                        It is available from application start to application end.
+
+                                    useReducer
+- It can manage application state for your react application.
+- You can store data and use across components from application start to end.
+- You can also use external state management library like "Redux".
+- Reducer depends on
+        a) State
+        b) Action
+- State stores the data and contains updated data
+- Actions define methods to update data into store.
+
+Phases of Application State with  Reducer
+---------------------------------------------------------
+
+Phase-1: You have to create a reducer that configures state and action.
+             You have to configure initial state before the reducer.
+
+Syntax:
+           const initalState =  { count: 0 };
+
+           function reducer(state, action)
+           {
+                switch(action.type) {
+                    case "add":
+                     return { count : state.count + 1 }
+                    case "remove":
+                     return { count : state.count - 1 }
+                }
+           }
+
+Phase-2:  You have to consume the reducer and dispatch actions from any component.
+                import { useReducer } from "react";
+   
+                const [state, dispatch] = useReducer(reducer, initialState);
+
+                function AddClick(){
+                    dispatch({type:"add"})
+                }
+   
+                function RemoveClick() {
+                    dispatch({type:"remove"})
+                }
+               
+                <button onClick={AddClick}> Add </button>
+                <button onClick={RemoveClick}> Remove </button>
+
+                 Your Cart Items [ { state.count } ]
+
+
+
+
+Ex:
+Shoppingcart.js
+
+import { useReducer } from "react";
+
+
+let initialState = {count: 0};
+
+function reducer(state, action){
+    switch(action.type){
+        case "add":
+        return {count: state.count + 1};
+        case "remove":
+        return {count: state.count - 1};
+    }
+}
+
+export function ShoppingCart()
+{
+    const [state, dispatch] = useReducer(reducer,initialState);
+
+    function AddClick(){
+        dispatch({type:"add"});
+    }
+    function RemoveClick(){
+        dispatch({type:"remove"});
+    }
+    return(
+        <div>
+            <h3> <span className="bi bi-cart4"></span> Your Cart [{state.count}]</h3>
+            <button onClick={AddClick}>Add</button>
+            <button onClick={RemoveClick}>Remove</button>
+        </div>
+    )
+}
