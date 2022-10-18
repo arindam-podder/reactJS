@@ -1,0 +1,136 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU3NDQyMTM4MDA3/details
+
+
+
+TypeScript
+- It is a language introduced and maintained by Microsoft.
+- Anderns Hejlsberg is the lead architect of TypeScript.
+- It is used to build large scale applications.
+
+Issues of JavaScript
+- It is not strongly typed.
+- It is not implicitly strictly typed.
+- It will not support all OOP features.
+- Extensibility
+- Code Security
+
+Draw Backs of OOP
+- They don't support low level features
+- They can't directly interact with Hardware Services
+- They need more memory
+- They are slow.
+- They are complex.
+
+Features of TypeScript:
+------------------------------------
+- TypeScript is an OOP language.
+- TypeScript is strongly typed.
+- TypeScript is strictly typed.
+- TypeScript is built in TypeScript.
+- It supports all low level features.
+- It can directly interact with hardware services.
+- It is faster.
+- It uses less memory.
+
+Note: Web Application have to target browser and TypeScript is not understandable to browser. TypeScript is translated into JavaScript.
+
+   
+                            TypeScript Architecture
+
+1. Core Compiler
+    - Identifying the syntax errors
+    - Verifying keywords
+    - Reporting the erorrs
+
+    core.ts                verifying code with keywords and syntax
+    program.ts            verifies the structure.
+    scanner.ts            handling input
+    emitter.ts                handling output
+    parser.ts                type parsing
+    checker.ts            verifies data type
+
+2. Standalone Compiler [tsc.ts]
+    - It translates the TypeScript language into JavaScript
+
+3. Language Service [Service.ts]
+   - It provides all the data and functions required for typescript.
+
+4. TS Server  [Server.ts]
+   - hosting typescript programs
+   - compiling and processing
+   - handling request and response
+
+5. VS Shim
+   - It is used to make your code platform neutral.
+   - It makes type script cross platform.
+
+6. Managed Language Service
+   - It is the service that comprises of functions and values, that can run on any
+    OS  services.
+
+
+ TypeScript Code => Compiled => Un Managed Code => Shim => Managed => Any OS
+
+7. Editors
+   - TypeScript provides editor configuration file that set rules for typescript.
+                "tsconfig.json"
+
+
+                                React TypeScript Extentions
+                                ---------------------------------------
+.ts                    : contracts, templates
+.tsx                : components
+
+
+Setup React Project with TypeScript
+--------------------------------------------------
+1. Install TypeScript on your PC
+
+        >npm install -g typescript
+        >tsc -v  
+
+2. Create a new React Application with TypeScript
+
+        E:\> npx create-react-app  appName  -template typescript
+
+
+                        TypeScript Language Basics
+- Variables
+- DataTypes
+- Operators
+- Statements
+
+
+                                 Variables
+- Same as JavaScript
+        a) var
+        b) let
+        c) const
+- Variables are defined with type
+
+        let  variableName:dataType;
+
+- All JavaScript Data Types are same in TypeScript
+
+        a) Primitive Types
+                number, string, boolean, null, undefined
+
+        b) Non Primitive Type
+                array, object, map
+
+Primitive Types
+
+let UserName:string = "John";
+let Age:number = 33;
+let Subscribed:boolean = true;
+
+- TypeScript uses "any" as root type.
+- TypeScript supports Union of types.
+
+        let  value:string|number;
+        let  value:string|number|boolean;
+
+Ex:
+let username:string|null = prompt("Enter Name");
+let price:number|undefined;
+console.log("Price=" + price);
