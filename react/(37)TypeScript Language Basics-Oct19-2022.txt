@@ -1,0 +1,157 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU3NzgzOTgyOTU1/details
+
+
+
+TypeScript Project
+1. Create a new folder "ts-project"
+
+2. Open in VS Code
+
+3. Run the following commands in Terminal
+
+        >npm init -y                    => package.json
+        >tsc -init                        => tsconfig.json
+
+4. Add a new folder "src"
+
+5. Add a new file into src  by name  "index.ts"
+
+                                TypeScript Language Basics
+1. Variables
+2. Data Types
+3. Operators
+4. Statements
+5. Functions
+
+Variables
+- Declaring, Assignment and Initialization is same as JavaScript
+    a) var
+    b) let
+    c) const
+- Variables are configured with DataType
+
+        let  variableName:dataType;
+
+Data Types
+- All JavaScript Data Types
+    a) Primitive Types
+            number, string, boolean, null, undefined
+    b) Non Primitive Types
+            array, object, map
+
+- TypeScript supports Union of Types
+
+    let variableName:type|type;
+
+- To allow all types of values the data type is "any".
+
+Ex:
+let username:string|null = prompt("Enter Name");
+let price:number|undefined;
+console.log("Price=" + price);
+
+- If value is not supplied into reference dynamically then it is "null".
+- If value is not assigned and later will be assigned then it is "undefined".
+
+let product:string|null =  fetch("")
+
+- Array Types
+a) Array with similar type
+
+        let categories:string[]  = [];
+        let sales:number[] = [];
+
+b) Array with different type
+
+        let  values:any[] = [ ];
+
+FAQ: What is difference between array "[ ]" and "Array()"?
+Ans :  Array "[]" is used to configure a "Tuple". A tuple allows to initialize various
+        types of values if data type is "any".
+
+        Array()  will not allow various types of values to initialize even when the
+        data type is "any". The first value type is used as array type.
+
+
+Note: Array() and [ ] they differ in only initialization of value not assignment.
+
+
+- Array also support union of types. Not for initialization only for Assignment.
+
+
+let categories:string[]|null     = fetch("");
+let sales:number[] | number;
+
+- All array methods are same as JavaScript.
+        push(), pop(), shift(), splice(), unshift(), find(), filter() etc..
+
+
+                                    Object Type
+- There is no specific data type for object.
+- You have to configure the property and its type while declaring object.
+
+
+let  product:{Property:dataType, Property:dataType};
+
+Ex:
+let product:{Name:string, Price:number} = {Name:"TV", Price:65000};
+console.log(`Name=${product.Name}\nPrice=${product.Price}`);
+
+
+Note: Every property in object is mandatory to implement. It you want an optional property then configure it as "nullable" type  using "?".
+
+                    { Name:string, Price:number, Stock?:boolean }
+
+                                Array of Objects [JSON]
+
+Syntax:
+        let  values:[{Property:type}] =  [ { } ,  { } ];
+
+        let values:any[]; = [{}, { }]
+
+
+                                     Date Type
+                                    ----------------
+- You have to use "Date" class to configure date type.
+
+    let  Mfd:Date =  new Date("YY-MM-DD");
+   
+- All JavaScript date methods are same in TypeScript
+        getHours()                    setHours()
+        getMinutes()                setMinutes()
+        getSeconds()                setSeconds()
+        getDate()                    setDate()
+        getDay()                        setMonth()        
+        getMonth()                    setYear()
+        getFullYear()
+        toLocaleDateString()
+        toLocaleTimeString()
+
+Ex:
+
+let Name:string = "Samsung TV";
+let Price:number = 60000.44;
+let Mfd:Date  = new Date("2022-10-22");
+
+console.log(`Name=${Name}\nPrice=${Price}\nMfd=${Mfd.toLocaleDateString()}`);
+
+
+- Operators same as JavaScript
+- Statements same as JavaScript
+
+                                        Functions
+- TypeScript function can configure data type for parameters.
+- Parameter can be nullable type.
+- If you are using nullable parameters then a required parameter can't follow nullable parameter.
+
+Syntax:
+            function Name(param1:dataType, param2:dataType)
+            {
+            }
+
+Syntax: Invalid
+function Details(Name:string, Price?:number, Stock:boolean){
+   
+}
+
+OOP Features:
