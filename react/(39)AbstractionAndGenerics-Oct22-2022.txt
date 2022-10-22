@@ -1,0 +1,225 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU4Njg4MDc1MDU1/details
+
+
+Contracts
+Classes
+    - Static and Non Static
+    - Access Modifier
+            public, private, protected
+    - Properties
+    - Contructor
+    - Methods
+Inhertance [extends]
+Polymorphism
+
+                                      Templates
+- Template comprises of data and logic, which you can implement and customize according to requirements.
+- Templates are used in implementation projects and roll-out projects.
+
+            a) End to End [Implementation]
+            b) Support
+            c) Rollout
+            d) Upgrade
+
+- Templates are designed by using "Abstract Classes".
+- Abstract class hides the structure and provides funcitonality for component.
+- The process of hiding structure and providing funcitonality is known as "Abstraction".
+
+Ex:
+1. Add a new folder  "library"
+
+2. Add subfolders  
+        contracts
+        templates
+        components
+
+3. Add new file into contracts
+        ProductContract.ts
+
+export interface ProductContract
+{
+    Name:string;
+    Price:number;
+    Qty:number;
+    Total():number;
+    Print():void;
+}
+
+4. Add new file into templates
+
+    ProductTemplate.ts
+
+import { ProductContract } from "../contracts/ProductContract";
+export abstract class ProductTemplate implements ProductContract
+{
+   public Name:string = "";
+   public Price:number = 0;
+   public Qty:number = 0;
+   public abstract Total():number;
+   public abstract Print(): void;
+}
+
+5. Add new file into components
+
+        ProductComponent.ts
+
+import { ProductTemplate } from "../templates/ProductTemplate";
+
+export class ProductComponent extends ProductTemplate
+{
+   Name = "Samsung TV";
+   Price = 45000.44;
+   Qty = 2;
+   Total(){
+     return this.Qty * this.Price;
+   }
+   Print(){
+    console.log(`Name=${this.Name}\nPrice=${this.Price}\nQty=${this.Qty}\nTotal=${this.Total()}`)
+   }
+}
+
+    index.ts
+
+import { ProductComponent } from "../library/components/ProductComponent";
+
+let tv = new ProductComponent();
+tv.Print();
+
+
+                                        Generics
+- Generics refer to Type Safe content.
+- Data type is unkown initially, once the data is passed it will be strongly typed.
+- TypeScript supports
+    a) Generic Properties
+    b) Generic Methods
+    c) Generic Classes
+    d) Generic Parameters
+
+
+Ex:
+interface IOracle {
+    UserName:string;
+    Password:string;
+    Database:string;
+}
+
+interface IMySql {
+    host:string;
+    pwd:string;
+    dbName:string;
+}
+interface IMongoDB {
+    url:string;
+}
+
+class Database
+{
+    public Connect<T>(connectionString:T){
+        for(var property in connectionString){
+            console.log(`${property} : ${connectionString[property]}`);
+        }
+    }
+}
+
+console.log(`----------Oracle Connection--------------`);
+let oracle = new Database();
+oracle.Connect<IOracle>({UserName:"Scott", Password:"tiger", Database:"EmpDb"});
+
+console.log(`----------MySql Connection--------------`);
+let mysql = new Database();
+mysql.Connect<IMySql>({host: "localhost", pwd:"1234", dbName:"Studb" });
+
+console.log(`----------Mongo Connection--------------`);
+let mongo= new Database();
+mongo.Connect<IMongoDB>({url:"mongodb://localhost:27017"});
+
+
+Ex:
+interface IProduct {
+    Name:string;
+    Price:number;
+}
+interface IEmployee {
+    FirstName:string;
+    LastName:string;
+    Desigation:string;
+}
+
+
+class Service<T>
+{
+    constructor(data:T){
+        for(var property in data){
+            console.log(`${property} : ${data[property]}`);
+        }
+    }
+}
+
+let tv = new Service<IProduct>({Name: "Smasung TV", Price: 45000.55});
+let emp = new Service<IEmployee>({FirstName:"A", LastName:"B", Desigation:"M"});
+
+                                    Enumeration
+- It is a collection of constants.
+- It can have constats of type
+        a) string
+        b) number
+        c) expression
+
+Ex:
+enum StatusCodes
+{
+    EntityLarge,
+    Method = 302,
+    NotFound = 404,
+    OK = 200,
+}
+console.log(StatusCodes.NotFound);
+
+- Auto initialization of value is based on previous value only if it is number type.
+
+Ex:
+enum StatusCodes
+{
+    Method = 302,
+    NotFound = 404,
+    OK = 200,
+    UnAutorized = "Not Authorized to Access",
+}
+console.log(StatusCodes.NotFound);
+
+Ex:
+enum StatusCodes
+{
+    A = 10,
+    B = 20,
+    C = A+B
+}
+console.log("Addition=" + StatusCodes.C);
+
+FAQ: Can enum have boolean type?
+Ans: No.
+
+FAQ: Why boolean not allowed ?
+Ans:  Enum will not allow assignment and boolean need assignement of true or false.
+
+FAQ: Enum supports expression, Is every expression allowed?
+Ans: No. Only the expression that returns a number or string allowed.
+
+            A = 10,
+            B = 20,
+            C = A > B,        // invalid
+
+FAQ: What is enum "Reverse Mapping"?
+Ans:  It is the technique of accessing the key with reference of value.
+
+Ex:
+enum StatusCodes
+{
+   NotFound = 404
+}
+console.log(`${StatusCodes[404]} - ${StatusCodes.NotFound} : Page you requested Not found`);
+
+
+- Deployment
+- WebPack
+- React Native
