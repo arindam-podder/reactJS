@@ -1,0 +1,165 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU5NTMxMTE0OTg0/details
+
+
+React with TypeScript
+
+1. Create a new React Application with TypeScript as language.
+
+    D:\>npx create-react-app  appName  --template  typescript
+
+2. Project file system
+
+    tsconfig.json                : TypeScript language configuation file.
+    .ts                                : Contracts, Templates, Hooks, Services
+    .tsx                            : Components
+
+   
+3. DataType for Element in "index.tsx"
+
+
+    document.getElementById("root") as HtmlElement
+
+
+Note: TypeScript  React Application library is same as you used in JavaScript.
+                - Hooks
+                - Routing
+                - Cookies
+                - Formik
+                - Axios
+   
+         TypeScript Component are also same as in JavaScript
+                - function component
+                - class component
+
+Ex:
+1. Add a new folder "contracts"
+
+        FakestoreContract.ts
+
+export interface FakestoreContract
+{
+    id:number;
+    title:string;
+    price:number;
+    image:string;
+    description:string;
+    category:string;
+    rating:{rate:number, count:number};
+}
+
+2. Add a new folder "components"
+
+        Shopping.tsx
+
+import { FakestoreContract } from "../contracts/FakestoreContract";
+import { useEffect, useState } from "react";
+
+export function Shopping(){
+    const [categories, setCategories] = useState<string[]>([]);
+    const [products, setProducts] = useState<FakestoreContract[]>([]);
+
+    function GetCategories():void{
+        fetch('http://fakestoreapi.com/products/categories&#39;)
+        .then(response=>response.json())
+        .then(data=>{
+            setCategories(data);
+        });
+    }
+
+    function GetProducts():void {
+        fetch('http://fakestoreapi.com/products&#39;)
+        .then(response=>response.json())
+        .then(data=>{
+            setProducts(data);
+        });
+    }
+
+    useEffect(()=>{
+        GetCategories();
+        GetProducts();
+    },[]);
+
+    return(
+        <div>
+            <h2>Fakestore Products</h2>
+            <div>
+                <label>Select Category</label>
+                <div>
+                <select>
+                    {
+                        categories.map(category=>
+                             <option key={category}>{category}</option>
+                            )
+                    }
+                </select>
+                </div>
+            </div>
+            <div>
+                <h2>Products List</h2>
+                <ol>
+                    {
+                        products.map(product=>
+                            <li key={product.id}>{product.title}</li>
+                            )
+                    }
+                </ol>
+            </div>
+        </div>
+    )
+}
+
+                                    Custom Hooks
+- Hook is a function that returns data and functionality.
+- Every hook must have component init phase, which is defined by using "useEffect".
+- Every hook must have dependency defined if it is a parameterized hook.
+- Every hook must return data.
+
+
+Ex:
+import { useEffect, useState } from "react";
+
+export function useApiData(url:string)
+{
+    const [data, setData] = useState([]);
+    useEffect(()=>{
+        fetch(url)
+        .then(res=>res.json())
+        .then(result=>{
+            setData(result);
+        })
+    },[url]);
+    return data;
+}
+
+
+Ex:
+import { FakestoreContract } from "../contracts/FakestoreContract";
+import { useEffect, useState } from "react";
+import { useApiData } from "../hooks/useApiData";
+
+export function Shopping(){
+
+    const categories = useApiData('http://fakestoreapi.com/products/categories&#39;);
+    const products = useApiData('http://fakestoreapi.com/products&#39;);
+
+    return(
+        <div>
+            <h2>Fakestore Products</h2>
+            <ol>
+            {
+                categories.map(category=>
+                    <li key={category}>{category}</li>
+                    )
+            }
+            </ol>
+            <h2>Products</h2>
+            <ol>
+                {
+                    products.map(product=>
+                        <li></li>
+                        )
+                }
+            </ol>
+        </div>
+    )
+}
