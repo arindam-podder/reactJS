@@ -1,0 +1,298 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTYwNjk2Nzc4NTkx/details
+
+
+1. Create a folder
+
+2. Run init
+    > npm init -y
+
+3. Create public / index.html
+
+4. Install Webpack
+
+    >npm install webpack webpack-cli --save-dev
+
+5. Add a new file
+
+// webpack.config.js
+
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "build"),
+  },
+};
+
+
+6. Add in package.json
+
+"scripts": {
+
+    "build": "webpack"
+  },
+
+
+7. Install HTML webpack plug-in
+
+ npm install html-webpack-plugin --save-dev
+
+
+8. Make changes in Webpack.config
+
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    }),
+  ],
+
+
+
+// Final Code
+
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "build"),
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    }),
+  ],
+};
+
+8. Add web pack dev server
+
+> npm install --save-dev webpack-dev-server
+
+
+9.  Modifiy Webpack.config
+
+devServer: {
+    static: {
+      directory: path.join(__dirname, "build"),
+    },
+    port: 3000,
+  }
+
+
+10. Package.json Scripts
+
+"scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development"
+  }
+
+>npm run start
+
+11.  Install Babel
+
+> npm i @babel/core @babel/preset-env babel-loader --save-dev
+
+
+12. Modify Webpack.config.js
+
+
+module: {
+    // exclude node_modules
+    rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+    ],
+  },
+  // pass all js files through Babel
+  resolve: {
+    extensions: ["*", ".js"],
+  }
+
+13. Add file
+
+// .babelrc
+
+{
+  "presets": [
+    "@babel/preset-env"
+  ]
+}
+
+
+14. Add React
+
+>npm i react react-dom --save
+>npm i @babel/preset-react --save-dev
+
+
+15. Babel Config
+
+{
+    "presets": [
+      "@babel/preset-env",
+      ["@babel/preset-react", {
+      "runtime": "automatic"
+    }]
+    ]
+}
+
+16. Add rules webpack.config
+
+rules : [
+  test: /\.(js|jsx)$/,         // <-- added `|jsx` here
+  ]
+
+extensions: ["*", ".js", ".jsx"],
+
+17.  Create Component
+        hello.js
+        const Hello = () => <h1>Hello from React!</h1>;
+
+         export default Hello;
+
+
+18. Index.js
+
+import React from "react";
+import { createRoot } from "react-dom/client";
+import Hello from "./Hello";
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Hello />);
+
+
+19. Index.html
+<body>
+    <div id="root"></div>
+</body>
+
+
+
+20. Webpack.config.js
+
+
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "build"),
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    }),
+  ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "build"),
+    },
+    port: 3000,
+  },
+  module: {
+      rules: [
+        {
+          test: /\.(js)$/,
+          exclude: /node_modules/,
+          use: ["babel-loader"],
+        },
+      ],
+  },
+  resolve: {
+    extensions: ["*", ".js"],
+  },
+};
+
+
+.babelrc
+
+
+{
+    "presets": [
+      "@babel/preset-env",
+      ["@babel/preset-react", {
+      "runtime": "automatic"
+     }]
+    ]
+}
+
+
+package.json
+
+{
+  "name": "react-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^9.0.1",
+    "html-webpack-plugin": "^5.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
+
+index.js
+
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { Welcome } from "./Welcome";
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Welcome/>);
+
+
+welcome.js
+
+
+export function Welcome(){
+    return(
+        <div>
+            <h2>Welcome to React JS</h2>
+            <p>Project using Webpack</p>
+        </div>
+    )
+}
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <noscript>Please Enable JavaScript</noscript>
+    <div id="root"></div>
+</body>
+</html>
