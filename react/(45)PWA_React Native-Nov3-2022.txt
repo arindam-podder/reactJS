@@ -1,0 +1,44 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTY3NzA5NDEyNzI4/details
+
+
+
+React, React Material => SPA [Single Page Applications]
+React, React Native     => PWA [Progress Web Applications]
+         Android, IOS         App like experince in browser.
+                                 Write one and run any where.
+                                 [window, linux, mac, android, ios]
+- Ionic
+- Apache Cordova
+- NativeScript etc..
+
+                                Mobile Apps
+Setup Environment
+- React
+- React Native
+- Expo SDK
+- Android Studio
+- Mobile Emulators
+
+D:\>npm install -g expo-cli
+
+Create new Project
+
+D:\>npx create-expo-app   appname --template
+
+Run App
+
+> expo start  
+
+React Native UI        Android        iOS                                Web
+<View>                <ViewGroup>    <UIView>                        <div>
+<Text>                <TextView>        <UITextView>                <p>
+<Image>                <ImageView>    <UIImageView>            <img>
+<ScrollView>                                                                     <div> scrollable
+<TextInput>                                                                         <input type="text">
+<StyleSheet>            
+<Switch>
+<FlatList>
+<SectionList>
+<Alert>
+<Modal>
+<StatusBar>
