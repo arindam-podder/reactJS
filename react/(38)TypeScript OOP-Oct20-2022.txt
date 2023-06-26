@@ -1,0 +1,191 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NDkxMDkyNjA3MTE4/details
+
+
+Type Data Types
+Operators
+Statements
+Functions
+
+                                     TypeScript OOP
+
+Contracts in OOP
+- Contract defines rules for designing any component.
+- Contract is created by using "interface".
+- Interface can contain only rules.
+- Every rule in a contract is madatory to implement.
+
+Syntax:
+ interface  IName
+ {
+   rules;
+ }
+
+- Contract can contain only rule without any implementation
+
+    {
+     Name:string =  "";            // invalid
+    }
+
+Ex:
+interface IProduct
+{
+    Name:string;
+    Price:number;
+    Stock:boolean;
+    Qty:number;
+}
+let product:IProduct = {
+    Name: "Samsung TV",
+    Price: 30000.33,
+    Stock: true,
+    Qty: 2
+}
+
+- Contract can contain optional rules.
+- Optional rules are defined by using Null Reference character " ? ".
+
+Ex:
+interface IProduct
+{
+    Name:string;
+    Price:number;
+    Stock:boolean;
+    Qty?:number;                    // optional
+}
+let product:IProduct = {
+    Name: "Samsung TV",
+    Price: 30000.33,
+    Stock: true,
+}
+
+- Contract can have readonly rules.
+- Every rule defined in contract will allow re-assignment of value.
+- If you want to restrict, you can mark it as read-only.
+
+Ex:
+interface IProduct
+{
+    Name:string;
+    readonly Price:number;
+    Stock:boolean;
+}
+let product:IProduct = {
+    Name: "Samsung TV",
+    Price: 30000.33,
+    Stock: true,
+}
+product.Price = 45000.44;        // invalid
+
+console.log(`Name=${product.Name}\nPrice=${product.Price}\nStock=${product.Stock}`);
+
+- Contract can have rules for methods.
+- Method rules contain
+
+            a) Method Name
+            b) Return Type
+
+- Method rules can have only declaration no definition.
+
+Ex:
+interface IProduct
+{
+    Name:string;
+    readonly Price:number;
+    Stock:boolean;
+    Qty:number;
+    Total():number;
+    Print():void;
+    Rating?():void;
+}
+let product:IProduct = {
+    Name: "Samsung TV",
+    Price: 30000.33,
+    Stock: true,
+    Qty:2,
+    Total(){
+        return this.Qty * this.Price;
+    },
+    Print(){
+        console.log(`Name=${this.Name}\nPrice=${this.Price}\nStock=${this.Stock}\nTotal=${this.Total()}`);
+    }
+}
+product.Print();
+
+- You can extend a contract.
+- Contract supports
+        a) Single Inheritance
+        b) Multi Level
+        c) Multiple
+
+Ex:
+interface BankApp_Legacy {
+    BankName:string;
+}
+interface BankApp_Version1
+{
+    PersonalBanking:string;
+    NRIBanking:string;
+}
+interface BankApp_Version2 extends BankApp_Version1, BankApp_Legacy
+{
+    Loans:string;
+}
+
+let Hdfc:BankApp_Version2 = {
+    BankName: "HDFC Bank",
+    PersonalBanking: "Personal Banking",
+    NRIBanking : "NRI Banking",
+    Loans: "Loans Modules"
+}
+
+                                        Class in TypeScript
+- Everything same as in JavaScript but class in typescript can handle static and non-static.
+- Class can have Access modifiers
+        a) public
+        b) private
+        c) protected
+- Class members are same
+        a) contructor
+        b) property
+        c) method
+        d) accessor
+
+                                        Static Members
+- Static refers to continous memory.
+- Memory allocated for first object will continue to next.
+- Static members are defined by using "static" keyword.
+- Static members are accessed within or outside class by using class name.
+
+                                        Non-Static Members
+- Refers to discreet memory
+- It is disconnected memory
+- Memory is newly allocated for every object.
+- They are accessed within class by using "this" keyword and outside class by using instance of class.
+
+Ex:
+class Demo
+{
+    static s = 0;
+    n = 0;
+    constructor(){
+        Demo.s = Demo.s + 1;
+        this.n = this.n + 1;
+    }
+    Print(){
+        console.log(`s=${Demo.s}  n=${this.n}`);
+    }
+}
+let obj1 = new Demo();
+obj1.Print();
+
+let obj2 = new Demo();
+obj2.Print();
+
+let obj3 = new Demo();
+obj3.Print();
+
+
+                                Access Modifiers
+- public
+- private
+- protected

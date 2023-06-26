@@ -1,0 +1,287 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTAzNjk1NTU4NTQx/details
+
+
+
+Custom Hooks
+Ex:
+1. Add a new file into Hooks folder
+
+            useCaptcha.ts
+
+import { useEffect, useState } from "react";
+
+export function useCaptcha()
+{
+    const [code, setCode] = useState('');
+   useEffect(()=>{
+    var a = Math.random() * 10;
+    var b = Math.random() * 10;
+    var c = Math.random() * 10;
+    var d = Math.random() * 10;
+    var e = Math.random() * 10;
+    var f = Math.random() * 10;
+    setCode(`${Math.round(a)} ${Math.round(b)} ${Math.round(c)} ${Math.round(d)} ${Math.round(e)} ${Math.round(f)}`)
+   },[]);
+   return code;
+}
+
+2. Import and Implement
+         Login.tsx
+import { useCaptcha } from "../hooks/useCaptcha";
+
+export function Login(){
+    const captcha = useCaptcha();
+    return(
+        <div>
+            <h2>User Login</h2>
+            <dl>
+                <dt>User Name</dt>
+                <dd><input type="text"/></dd>
+                <dt>Password</dt>
+                <dd><input type="password"/></dd>
+                <dt>Verify Code</dt>
+                <dd>{captcha}</dd>
+            </dl>
+            <button>Login</button>
+        </div>
+    )
+}
+
+Task : Create a hook that takes date input and returns in date format
+                      Thursday,  27 October 2022
+
+            new Date("2022-10-27");
+
+         Create a hook to change the text into Title case
+
+         Create a hook that takes collection and returns sorted. Define a boolean
+         property that can change the sorting order reversed.
+
+
+        Syntax:
+                export function useSorting(collection:string[], reverse:boolean)
+                {
+                       if(reverse==true) {
+                           //descending
+                       } else {
+                          //ascending
+                       }
+                }
+       
+                useSorting(["A", "D","F", "C", "B"], false)
+
+
+
+Ex: SentenceCase
+
+import { useEffect, useState } from "react";
+
+export function useSentenceCase(str:string)
+{
+    const [sentence, setSentence] = useState('');
+    useEffect(()=>{
+        var firstChar = str.charAt(0);
+        var restChars = str.substring(1);
+        var result = firstChar.toUpperCase() + restChars.toLowerCase();
+        setSentence(result);
+    },[str]);
+    return sentence;
+}
+
+                                    Redux Store
+- InitialState
+- Reducers
+- Payload
+- Store
+- Disptacher
+
+Ex: Create a store for storing Cart Items and their Count.
+
+1. Install Redux in your project
+
+    > npm install @reduxjs/toolkit   react-redux
+
+2. Create a Slicer
+     - Slicer is a component of Redux library
+     - Slide ususally contains
+            a) Initial State
+            b) Refernce Name
+            c) Reducers : state and actions
+
+ Syntax:
+          initialState = {
+             cartItems: [],
+             cartCount: 0
+          }
+
+          const cartSlicer = createSlicer({
+              InitialState,
+              name,
+              reducers: {
+                   addToCart(state:any, action) {
+                      state.cartItems.push(action.payload);
+                      state.cartCount = state.cartItems.length;
+                   }
+              }
+          })
+
+
+
+     "CartSlicer.tsx"
+
+import { createSlice } from "@reduxjs/toolkit";
+ 
+const initialState = {
+    cartItems: [],
+    cartCount : 0
+}
+ 
+const cartSlice  = createSlice({
+    name: 'cart',
+    initialState,
+    reducers: {
+        addToCart(state:any, action){
+             state.cartItems.push(action.payload);
+             state.cartCount = state.cartItems.length;
+        }
+    }
+});
+export const { addToCart } = cartSlice.actions;
+export default cartSlice.reducer;
+
+3. Configure store
+
+            "store.tsx"
+
+import { configureStore } from "@reduxjs/toolkit";
+import CartSlicer from "./CartSlicer";
+ 
+export default configureStore({
+    reducer: {
+        store : CartSlicer                  => initial State , actions  
+    }                              
+})
+
+
+4. Configure the provider for application
+
+     Index.tsx
+
+     <Provider store={store} >
+       <ProductsCatalog />
+     </Provider>
+
+5. Disptach actions from any component
+
+    const dispatch = useDispatch();
+ 
+    const handleAddToCart = (product:any) => {
+        dispatch(addToCart(product));
+    }  
+ 
+
+ProductsCatalog.tsx
+
+import { useState, useEffect } from 'react';
+import { FakestoreContract } from '../contracts/FakestoreContract';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../slicers/CartSlicer';
+
+export function ProductsCatalog()
+{
+    const dispatch = useDispatch();
+ 
+    const handleAddToCart = (product:any) => {
+        dispatch(addToCart(product));
+    }  
+ 
+
+    const [products, setProducts] = useState<FakestoreContract[]>([])
+
+    useEffect(()=>{
+        fetch('http://fakestoreapi.com/products&#39;)
+        .then(res=>res.json())
+        .then(data=>{
+            setProducts(data);
+        })
+    },[])
+
+    return(
+        <div>
+            <h2>Products Catalog</h2>
+            <div style={{display:'flex', flexWrap:'wrap'}}>
+            {
+                products.map(product=>
+                    <div style={{width:'200px', margin:'10px', padding:'10px'}}>
+                        <img src={product.image} width="200" height="150"/>
+                        <p>{product.title}</p>
+                        <button onClick={()=> handleAddToCart(product)}>Add to Cart</button>
+                    </div>
+                    )
+            }
+            </div>
+        </div>
+    )
+}
+1 class comment
+ganesh pasupuletiYesterday
+useTitleCase 
+===========
+
+import { useEffect, useState } from "react";
+
+export function useTitleCase(str:string):string|undefined{
+    const[titleCase,setTitleCase]=useState('');
+    var result="";
+    let splitString = str.split(" ");
+    for(let value of splitString){
+        let fletter= value.charAt(0);
+        let lLetter=value.substring(1);
+        result+=fletter.toUpperCase()+""+lLetter.toLocaleLowerCase()+" ";
+    }
+    useEffect(()=>{
+     setTitleCase(result);
+    },[str]);
+return titleCase;
+}
+
+input : const textTitle = useTitleCase('wleCome tO the my rEAct wORLd');
+out put : Wlecome To The My React World
+
+useDateInputFormat :
+===================
+import { useEffect, useState } from "react";
+
+export function useDateInputFormat(input:string):string{
+    
+    const[formatedDateString,setFormatedDateString]=useState('');
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let d = new Date(input);
+    useEffect(()=>{
+        let formatedDate=days[d.getDay()] +", "+d.getDate()+" "+months[d.getMonth()] +" "+d.getFullYear();
+        setFormatedDateString(formatedDate);
+    },[input])
+   
+return formatedDateString;
+}
+input : const date = useDateInputFormat('2022-10-27');
+output :  Thursday, 27 October 2022
+
+useSorting :
+==========
+import { useEffect, useState } from "react";
+
+export function useSorting(collection:string[],reverse:boolean):string[]{
+    const[sort,setSort]=useState<string[]>([]);
+useEffect(()=>{
+    setSort(collection.sort());
+   if(!reverse){ 
+    setSort(collection.reverse());
+   }
+},[])
+return sort;
+}
+
+input : const sorting= useSorting(["Banana", "Orange", "Apple", "Mango"],true);
+output : Apple Banana Mango Orange

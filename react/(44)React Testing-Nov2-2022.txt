@@ -1,0 +1,119 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTYwOTk0MTQzMjQ4/details
+
+
+Unit Testing
+-  Jasmine Karma
+-  Jest
+-  Protractor
+
+- React application provides a testing library  "@testing-library/react".
+- It is configured using Jest and provides various methods and properties for testing your components, services, hooks etc..
+- Testing every component comprises of 3 phases
+
+    a) Arrange            : Import the component to test
+    b) Act                    : Configure the elements in component to test
+    c) Assert                : It returns the test result by asserting values
+                                expected == tobe    : pass
+                                expected !== tobe   : fail
+                             Expected is what developer written.
+                             ToBe is what client wants.
+
+- To handle various phase of unit testing every framework provides different methods.
+
+            it(), test()            :  To arrange the test block
+            screen            :  To Act on UI
+            fireEvent            :  To act on element events
+            expect()            :  To Assert
+           
+
+- For Every component maintain 3 files
+
+        a)   component.js                Markup and Functionality
+        b)   component.css            Styles
+        c)   component.test.js            Test Methods
+             component.spec.js
+
+
+Ex:
+1. Add following files
+
+            "LikesComponent.js"
+
+import { useState } from "react"
+
+export function LikesComponent(){
+    const [count, setCount] = useState(0);
+    function handleIncrement(){
+        setCount((c)=> c + 1)
+    }
+    function handleDecrement(){
+        setCount((c)=> c--);
+    }
+    return(
+        <div className="container-fluid">
+            <h2>Like Counter</h2>
+            <button data-testid="increment" onClick={handleIncrement}>Like</button>
+            <span data-testid="counter">{count}</span>
+            <button data-testid="decrement" onClick={handleDecrement}>Dislike</button>
+        </div>
+    )
+}
+
+2. LikesComponent.test.js
+
+import { screen, fireEvent, render } from "@testing-library/react";
+import { LikesComponent } from "./LikesComponent";
+
+test("Likes Counter Test", ()=>{
+
+    //Arrange
+    render(<LikesComponent/>);
+
+    //Act
+    const btnIncrement = screen.getByTestId("increment");
+    const counter = screen.getByTestId("counter");
+
+    fireEvent.click(btnIncrement);
+
+    //Assert
+    expect(counter).toHaveTextContent("1");
+
+})
+
+3. App.js
+
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <a href="#">Learn React</a>
+      <h1>React Shopping - Home</h1>
+    </div>
+  );
+}
+
+export default App;
+
+
+4. App.test.js
+
+import { LinkedCamera } from '@mui/icons-material';
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+  expect(linkElement).toHaveAttribute("href");
+});
+
+
+5.  Run test
+
+        >npm run test
+
+
+                                    React Native

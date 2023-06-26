@@ -1,0 +1,101 @@
+iampodder - https://classroom.google.com/c/NTQ3MDI4MTQ5Mjgz/m/NTU3MTA0Mzc5Njgx/details
+
+
+Redux
+- A Predictable State Container for JS Apps.
+- It is predictable as developers configures the exact actions and values to store.
+- Redux uses MVC architecture client side.
+
+Design Pattern: It is a solution for software design problems that occur in real-world application development. They are about
+        a) How to design a object
+        b) How to configure a class
+        c) How to handle communication.
+The design patterns are classified into 3 groups [GOF - Gang of Four]
+        a) Creational Patterns
+        b) Structural Patterns
+        c) Behavioural Patterns
+
+
+What is MVC?
+- It is an software architectural pattern.
+- Software architectural pattern is responsible for building the application as well as controlling the application flow.
+- Trygve introduced MVC in early 1970's as a part of "Small Talk".
+- Code reusability and Code separation concerns.
+
+            Java            Spring MVC
+            Php            Cake PHP, Code Igniter
+            Python        Django, Flask
+            Ruby            Ruby on Rains
+            JavaScript    SPINE, Angular
+            .NET            ASP.NET MVC
+
+- MVC separates application into 3 components
+
+        a) Model
+        b) View
+        c) Controller
+
+- Model
+    * It represents the data we are working with.
+    * It comprises of data and logic used to manipulated data.
+    * It also contains data validation rules.
+    * It is reffered as "Single-Source-Of-Truth"
+
+            Previous Value == CurrentValue    => No Change Detected
+            Previous Value !== CurrentValue  => Change Detected
+
+    * REDUX model is "Store"
+    * Store handles
+            a) Data
+            b) Updates
+            c) Data Validation Rules
+
+Controller
+- It defines application specific logic
+- It handles overall communication between Model and View.
+- It can fetch data from Model and update to View.
+- It can identify the changes in View and update back to Store.
+- In REDUX "reducer" handles controller logic.
+
+        a) Defines Actions
+        b) Identifies the Action type
+        c) Update into store
+            [It carries payload to store]
+
+View
+- It descirbes the UI.
+- It is the consumer in REDUX.
+- It is a component in your React application what consumes the data and presents the data.
+- In REDUX view dispatches the actions, that specifiy when and what data to store.
+
+Ex:
+ User Clicks on "Add to Cart" => It collects data of current product [Payload] => store in redux Store => Data from redux store can be fetched and used in any component.
+
+
+Redux Features
+- Predictable
+- Centralized
+- Debuggable
+- Flexible
+
+                            Redux Provides a Service
+                            ------------------------------------
+- Service uses a Single Ton pattern.
+- An object is created for the first request and same will be used across multiple requests.
+- Every service in software architecture follows a design pattern called
+                "Dependency Injection"
+- DI uses 2 components
+        a) Provider
+        b) Injectors
+- Provider locates the data in memory.
+- Injector is going to inject data into component.
+                         
+Redux Terminology
+- Store
+- Payload
+- Reducer
+- Actions
+- Dispatcher
+- Provider
+- Injector
+- Consumer
