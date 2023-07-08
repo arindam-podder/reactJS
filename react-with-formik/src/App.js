@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import { useFormik } from 'formik';
+import validationSchema from './schema/validation';
 
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
     fName:"",
     lName:"",
     email:"",
-    mobileNo:""
+    mobileNo:"",
+    password:"",
+    confirmPassword:""
   }
 
   const formSubmit = function(data){
@@ -17,22 +20,22 @@ function App() {
     document.getElementById("dataDisplay").style.display="block";
   }
 
-  const frmValidate = (data) => {
-    const error = {}
-    if(!data.fName){
-      error.fName = "Required"
-    }
-    if(!data.lName){
-      error.lName = "Required"
-    }
-    if(!data.email){
-      error.email = "Required"
-    }
-    if(!data.mobileNo){
-      error.mobileNo = "Required"
-    }
-    return error;
-  }
+  // const frmValidate = (data) => {
+  //   const error = {}
+  //   if(!data.fName){
+  //     error.fName = "Required"
+  //   }
+  //   if(!data.lName){
+  //     error.lName = "Required"
+  //   }
+  //   if(!data.email){
+  //     error.email = "Required"
+  //   }
+  //   if(!data.mobileNo){
+  //     error.mobileNo = "Required"
+  //   }
+  //   return error;
+  // }
 
   function hideDataDisplay(){
     document.getElementById("dataDisplay").style.display="none";
@@ -41,7 +44,8 @@ function App() {
   const formik = useFormik({
     initialValues:formInitValue,
     onSubmit:formSubmit,
-    validate:frmValidate
+    //validate:frmValidate,  //this for user defined validation , this and below yup both we can use together
+    validationSchema:validationSchema   //this is yup validation
   });
 
   console.log( "error =", formik.errors)
@@ -93,6 +97,28 @@ function App() {
           value={formik.values.mobileNo}  
         /> 
         { (formik.touched.mobileNo && formik.errors.mobileNo) ? <div style={{color:"red"}}>{formik.errors.mobileNo}</div> : null}
+        <br />
+        <label>Password</label>
+        <input 
+          type="text" 
+          id="password" 
+          name="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}  
+        /> 
+        { (formik.touched.password && formik.errors.password) ? <div style={{color:"red"}}>{formik.errors.password}</div> : null}
+        <br />
+        <label>Confirm Password</label>
+        <input 
+          type="text" 
+          id="confirmPassword" 
+          name="confirmPassword"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.confirmPassword}  
+        /> 
+        { (formik.touched.confirmPassword && formik.errors.confirmPassword) ? <div style={{color:"red"}}>{formik.errors.confirmPassword}</div> : null}
         <br />
         <button type='button' onClick={formik.handleSubmit} >Submit</button>
       </form>
